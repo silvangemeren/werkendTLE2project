@@ -3,6 +3,10 @@
     <form>
 
         <div class="leftInput">
+            <div>
+                <label for="name">Naam</label>
+                <input name="name" id="name" required placeholder="bv. Albert Heijn"/>
+            </div>
     <div>
         <label for="function">Functie</label>
         <input name="function" id="function" required placeholder="bv. Manager"/>
@@ -28,10 +32,6 @@
             <div>
                 <label for="salary">Salaris</label>
                 <input name="salary" id="salary" required placeholder="bv. 30.000 per jaar"/>
-            </div>
-            <div>
-                <label for="contract">Contractduur</label>
-                <input name="contract" id="contract" required placeholder="bv. 2 jaar"/>
             </div>
             <div>
                 <label for="image">Image</label>

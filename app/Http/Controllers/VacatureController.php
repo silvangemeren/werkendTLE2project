@@ -10,7 +10,7 @@ class VacatureController extends Controller
      * Display a listing of the resource.
      */
     public function index(){
-        return view('makeVacature.index');
+        return view('Vacatures.index');
     }
 
     /**
@@ -40,9 +40,9 @@ class VacatureController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit()
     {
-        //
+        return view('Vacatures.edit');
     }
 
     /**

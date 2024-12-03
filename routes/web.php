@@ -19,5 +19,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/vacatures', [VacatureController::class, 'index'])->name('vacature.index');
+Route::get('/vacatures/edit', [VacatureController::class, 'edit'])->name('vacature.edit');
 
 require __DIR__.'/auth.php';
