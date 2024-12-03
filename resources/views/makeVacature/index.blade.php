@@ -38,6 +38,14 @@
                 <label for="salary">Salaris</label>
                 <input name="salary" id="salary" required placeholder="bv. 30.000 per jaar"/>
             </div>
+            <div>
+                <label for="contract">Contractduur</label>
+                <input name="contract" id="contract" required placeholder="bv. 2 jaar"/>
+            </div>
+            <div>
+                <label for="image">Image</label>
+                <input name="image" id="image" type="file" required/>
+            </div>
         </div>
 
     </form>
