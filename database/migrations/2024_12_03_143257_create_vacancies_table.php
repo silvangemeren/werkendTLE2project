@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('location');
+            $table->string("function");
+            $table-> integer("work-hours");
+            $table->integer("salary");
             $table->enum('status', ['available', 'closed', 'pending'])->default('available');
             $table->unsignedBigInteger('employer_id');
             $table->foreign('employer_id')->references('id')->on('users')->onDelete('cascade');
