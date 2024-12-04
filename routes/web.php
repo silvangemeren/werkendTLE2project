@@ -17,10 +17,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
+//vacancies
 Route::get('/vacatures', [VacancyController::class, 'index'])->name('vacancy.index');
 Route::get('/vacatures/create', [VacancyController::class, 'create'])->name('vacancy.create');
 Route::post('/vacatures/store', [VacancyController::class, 'store'])->name('vacancy.store');
 Route::get('/vacatures/edit', [VacancyController::class, 'edit'])->name('vacancy.edit');
+
+Route::get('/vacancies', [VacancyController::class, 'index'])->name('vacancies.index');
+
 
 require __DIR__.'/auth.php';
