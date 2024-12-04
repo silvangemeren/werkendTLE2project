@@ -1,12 +1,20 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('employee-employer');
 });
+
+
+// Employee and Employer pages routes
+Route::get('/employee', [EmployeeController::class, 'index'])->name('employee-page');
+Route::get('/employer', [EmployerController::class, 'index'])->name('employer-page');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
