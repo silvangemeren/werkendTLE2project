@@ -10,7 +10,8 @@ class VacancyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(){
+    public function index()
+    {
         $vacancies = Vacancy::all();
         return view('vacancies.index', compact('vacancies'));
     }
@@ -28,41 +29,43 @@ class VacancyController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate input
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'adres' => 'required|string|max:255',
-            'stad' => 'required|string|max:255',
-            'postcode' => 'required|string|max:20',
-            'land' => 'required|string|max:255',
-            'function' => 'required|string|max:255',
-            'work_hours' => 'required|integer|min:1',
-            'salary' => 'required|integer|min:0',
-            'imageUrl' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+//       dd($request->all());
+//        $request = $request->validate([
+//            'title' => 'required|string|max:255',
+//            'description' => 'nullable|string',
+//            'adres' => 'required|string|max:255',
+//            'stad' => 'required|string|max:255',
+//            'postcode' => 'required|string|max:20',
+//            'land' => 'required|string|max:255',
+//            'function' => 'required|string|max:255',
+//            'work_hours' => 'required|integer|min:1',
+//            'imageUrl' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
+//            'salary' => 'required|integer|min:0',
+//        ]);
 
-        // Store uploaded file and get its path
+        $request->file('imageUrl')->store('images', 'public');
         $imagePath = $request->file('imageUrl')->store('images', 'public');
 
-        // Build location from multiple inputs
         $location = implode(', ', array_filter([
-            $request->input('adres'),
-            $request->input('stad'),
-            $request->input('postcode'),
-            $request->input('land'),
+            $request['adres'],
+            $request['stad'],
+            $request['postcode'],
+            $request['land']
         ]));
 
-        // Add additional fields
-        $validatedData['location'] = $location;
-        $validatedData['imageUrl'] = $imagePath;
-        $validatedData['status'] = 'available';
+        $vacancy = new Vacancy();
+        $vacancy->title = $request['title'];
+        $vacancy->description = $request['description'];
+        $vacancy->location = $location;
+        $vacancy->function = $request['function'];
+        $vacancy->work_hours = $request['work_hours'];
+        $vacancy->salary = $request['salary'];
+        $vacancy->status = 'available';
+        $vacancy->imageUrl = $imagePath;
+        $vacancy->save();
 
-        // Create vacancy
-        Vacancy::create($validatedData);
 
-        // Redirect with success message
-        return redirect()->route('vacancy.index')->with('success', 'Vacature succesvol aangemaakt.');
+        return redirect()->route('vacancy.index');
     }
 
     /**
@@ -76,17 +79,48 @@ class VacancyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit()
+    public function edit($id)
     {
-        return view('vacancies.edit');
+        $vacancy = Vacancy::findOrFail($id);
+
+        $locationParts = explode(', ', $vacancy->location);
+
+        $adres = $locationParts[0] ?? '';
+        $stad = $locationParts[1] ?? '';
+        $postcode = $locationParts[2] ?? '';
+        $land = $locationParts[3] ?? '';
+        return view('vacancies.edit', compact('vacancy'))->with([
+            'adres' => $locationParts[0],
+            'stad' => $locationParts[1],
+            'postcode' => $locationParts[2],
+            'land' => $locationParts[3],
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,$id)
     {
-        //
+
+        $location = implode(', ', array_filter([
+            $request['adres'],
+            $request['stad'],
+            $request['postcode'],
+            $request['land']
+        ]));
+
+        $vacancy = Vacancy::find($id);
+        $vacancy->title = $request['title'];
+        $vacancy->description = $request['description'];
+        $vacancy->location = $location;
+        $vacancy->function = $request['function'];
+        $vacancy->work_hours = $request['work_hours'];
+        $vacancy->salary = $request['salary'];
+        $vacancy->status = 'available';
+
+        $vacancy->save();
+        return redirect()->route('vacancy.index');
     }
 
     /**
