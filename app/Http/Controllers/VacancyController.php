@@ -28,39 +28,40 @@ class VacancyController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'adres' => 'required|string|max:255',
-            'stad' => 'required|string|max:255',
-            'postcode' => 'required|string|max:20',
-            'land' => 'required|string|max:255',
-            'function' => 'required|string|max:255',
-            'work_hours' => 'required|integer|min:1',
-            'salary' => 'required|integer|min:0',
-            'status' => 'required',
-            'employer_id' => 'required',
-            'imageUrl' => 'required',
-        ]);
-        $location = "{$validatedData['adres']}, {$validatedData['stad']}, {$validatedData['postcode']}, {$validatedData['land']}";
-        $image = $validatedData['image'];
+//       dd($request->all());
+//        $request = $request->validate([
+//            'title' => 'required|string|max:255',
+//            'description' => 'nullable|string',
+//            'adres' => 'required|string|max:255',
+//            'stad' => 'required|string|max:255',
+//            'postcode' => 'required|string|max:20',
+//            'land' => 'required|string|max:255',
+//            'function' => 'required|string|max:255',
+//            'work_hours' => 'required|integer|min:1',
+//            'imageUrl' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
+//            'salary' => 'required|integer|min:0',
+//        ]);
 
-        $saveImage = $request->file('image')->store('images', 'public');
+        $request->file('imageUrl')->store('images', 'public');
+        $imagePath = $request->file('imageUrl')->store('images', 'public');
+
+        $location = implode(', ', array_filter([
+            $request['adres'],
+            $request['stad'],
+            $request['postcode'],
+            $request['land']
+        ]));
 
         $vacancy = new Vacancy();
-        $vacancy->title = $validatedData['title'];
-        $vacancy->description = $validatedData['description'];
+        $vacancy->title = $request['title'];
+        $vacancy->description = $request['description'];
         $vacancy->location = $location;
-        $vacancy->funcition = $validatedData['function'];
-        $vacancy->work_hours = $validatedData['work_hours'];
-        $vacancy->salary = $validatedData['salary'];
-        $vacancy->status = 'active';
-        $vacancy->employer_id = '1';
-        $vacancy->imageUrl = $saveImage;
+        $vacancy->function = $request['function'];
+        $vacancy->work_hours = $request['work_hours'];
+        $vacancy->salary = $request['salary'];
+        $vacancy->status = 'available';
+        $vacancy->imageUrl = $imagePath;
         $vacancy->save();
-
-        $vacancy->imageUrl = $validatedData['image'];
-        $image = $vacancy->imageUrl;
 
         return redirect()->route('vacancy.index');
     }
