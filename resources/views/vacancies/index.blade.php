@@ -17,7 +17,7 @@
                 <div class="bg-white rounded-lg shadow-md p-4 flex items-center gap-4">
                     <!-- Vacancy Image -->
                     <div class="w-24 h-24 overflow-hidden rounded-lg">
-                        <img src="{{ $vacancy->image_url }}" alt="{{ $vacancy->title }}" class="w-full h-full object-cover">
+                        <img src="{{ asset('storage/app/public/images' . $vacancy->image_url) }}" alt="{{ $vacancy->title }}" class="w-full h-full object-cover">
                     </div>
 
                     <!-- Vacancy Details -->

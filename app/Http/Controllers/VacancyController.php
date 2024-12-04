@@ -28,42 +28,41 @@ class VacancyController extends Controller
      */
     public function store(Request $request)
     {
-//       dd($request->all());
-//        $request = $request->validate([
-//            'title' => 'required|string|max:255',
-//            'description' => 'nullable|string',
-//            'adres' => 'required|string|max:255',
-//            'stad' => 'required|string|max:255',
-//            'postcode' => 'required|string|max:20',
-//            'land' => 'required|string|max:255',
-//            'function' => 'required|string|max:255',
-//            'work_hours' => 'required|integer|min:1',
-//            'imageUrl' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
-//            'salary' => 'required|integer|min:0',
-//        ]);
+        // Validate input
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'adres' => 'required|string|max:255',
+            'stad' => 'required|string|max:255',
+            'postcode' => 'required|string|max:20',
+            'land' => 'required|string|max:255',
+            'function' => 'required|string|max:255',
+            'work_hours' => 'required|integer|min:1',
+            'salary' => 'required|integer|min:0',
+            'imageUrl' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-        $request->file('imageUrl')->store('images', 'public');
+        // Store uploaded file and get its path
         $imagePath = $request->file('imageUrl')->store('images', 'public');
 
+        // Build location from multiple inputs
         $location = implode(', ', array_filter([
-            $request['adres'],
-            $request['stad'],
-            $request['postcode'],
-            $request['land']
+            $request->input('adres'),
+            $request->input('stad'),
+            $request->input('postcode'),
+            $request->input('land'),
         ]));
 
-        $vacancy = new Vacancy();
-        $vacancy->title = $request['title'];
-        $vacancy->description = $request['description'];
-        $vacancy->location = $location;
-        $vacancy->function = $request['function'];
-        $vacancy->work_hours = $request['work_hours'];
-        $vacancy->salary = $request['salary'];
-        $vacancy->status = 'available';
-        $vacancy->imageUrl = $imagePath;
-        $vacancy->save();
+        // Add additional fields
+        $validatedData['location'] = $location;
+        $validatedData['imageUrl'] = $imagePath;
+        $validatedData['status'] = 'available';
 
-        return redirect()->route('vacancy.index');
+        // Create vacancy
+        Vacancy::create($validatedData);
+
+        // Redirect with success message
+        return redirect()->route('vacancy.index')->with('success', 'Vacature succesvol aangemaakt.');
     }
 
     /**
