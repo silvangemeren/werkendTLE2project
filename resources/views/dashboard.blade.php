@@ -16,6 +16,7 @@
     </div>
 </x-app-layout>
 
+<html>
 </head>
 <body>
 <div class="dashboard">
