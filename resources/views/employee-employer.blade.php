@@ -9,7 +9,7 @@
             </a>
 
             <!-- Employer Button with Green color and larger size -->
-            <a href="{{ route('employer-page') }}"
+            <a href="{{ route('register') }}"
                class="w-full max-w-md bg-pink-700 text-white text-center py-16 text-2xl font-bold rounded-lg shadow-lg">
                 Werkgever
             </a>
