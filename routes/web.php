@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/vacatures', [VacancyController::class, 'index'])->name('vacancy.index');
 Route::get('/vacatures/create', [VacancyController::class, 'create'])->name('vacancy.create');
+Route::post('/vacatures/store', [VacancyController::class, 'store'])->name('vacancy.store');
 Route::get('/vacatures/edit', [VacancyController::class, 'edit'])->name('vacancy.edit');
 
 require __DIR__.'/auth.php';

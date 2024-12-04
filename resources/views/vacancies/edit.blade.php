@@ -4,8 +4,8 @@
 
         <div class="leftInput">
             <div>
-                <label for="name">Naam</label>
-                <input name="name" id="name" required placeholder="bv. Albert Heijn"/>
+                <label for="title">Naam</label>
+                <input name="title" id="titile" required placeholder="bv. Albert Heijn"/>
             </div>
             <div>
                 <label for="description">Omschrijving</label>

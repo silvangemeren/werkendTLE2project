@@ -1,11 +1,11 @@
 <x-layout>
     <h1>Vacature Creeeren</h1>
-    <form>
-
+    <form action="{{ route('vacancy.store') }}" method="post" enctype="multipart/form-data">
+        @csrf
         <div class="leftInput">
             <div>
-                <label for="name">Naam</label>
-                <input name="name" id="name" required placeholder="bv. Albert Heijn"/>
+                <label for="title">Naam</label>
+                <input name="title" id="title" required placeholder="bv. Albert Heijn"/>
             </div>
             <div>
                 <label for="description">Omschrijving</label>
@@ -38,6 +38,6 @@
                 <input name="image" id="image" type="file" required/>
             </div>
         </div>
-
+        <x-primary-button type="submit">Create</x-primary-button>
     </form>
 </x-layout>
