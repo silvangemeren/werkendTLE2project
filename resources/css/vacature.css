@@ -1,0 +1,104 @@
+/* Algemene reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 20px;
+}
+
+/* Wrapper voor vacatures */
+div {
+    margin-top: 20px;
+}
+
+form {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Vacature container */
+.x-vacancy-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.x-vacancy-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Vacature afbeelding */
+.x-vacancy-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+/* Titel en beschrijving */
+.x-vacancy-item h1 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* Bewerken link */
+.x-vacancy-item + a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.x-vacancy-item + a:hover {
+    text-decoration: underline;
+}
+
+/* Primaire knop */
+.x-primary-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.x-primary-button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsieve weergave */
+@media (max-width: 768px) {
+    .x-vacancy-item {
+        padding: 10px;
+    }
+
+    .x-vacancy-item h1 {
+        font-size: 16px;
+    }
+
+    .x-primary-button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}

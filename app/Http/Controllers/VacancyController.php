@@ -10,7 +10,8 @@ class VacancyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(){
+    public function index()
+    {
         $vacancies = Vacancy::all();
         return view('vacancies.index', compact('vacancies'));
     }
@@ -63,6 +64,7 @@ class VacancyController extends Controller
         $vacancy->imageUrl = $imagePath;
         $vacancy->save();
 
+
         return redirect()->route('vacancy.index');
     }
 
@@ -77,17 +79,48 @@ class VacancyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit()
+    public function edit($id)
     {
-        return view('vacancies.edit');
+        $vacancy = Vacancy::findOrFail($id);
+
+        $locationParts = explode(', ', $vacancy->location);
+
+        $adres = $locationParts[0] ?? '';
+        $stad = $locationParts[1] ?? '';
+        $postcode = $locationParts[2] ?? '';
+        $land = $locationParts[3] ?? '';
+        return view('vacancies.edit', compact('vacancy'))->with([
+            'adres' => $locationParts[0],
+            'stad' => $locationParts[1],
+            'postcode' => $locationParts[2],
+            'land' => $locationParts[3],
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,$id)
     {
-        //
+
+        $location = implode(', ', array_filter([
+            $request['adres'],
+            $request['stad'],
+            $request['postcode'],
+            $request['land']
+        ]));
+
+        $vacancy = Vacancy::find($id);
+        $vacancy->title = $request['title'];
+        $vacancy->description = $request['description'];
+        $vacancy->location = $location;
+        $vacancy->function = $request['function'];
+        $vacancy->work_hours = $request['work_hours'];
+        $vacancy->salary = $request['salary'];
+        $vacancy->status = 'available';
+
+        $vacancy->save();
+        return redirect()->route('vacancy.index');
     }
 
     /**
