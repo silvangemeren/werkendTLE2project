@@ -15,3 +15,21 @@
         </div>
     </div>
 </x-app-layout>
+
+</head>
+<body>
+<div class="dashboard">
+{{--    @if(Auth::user()->isRole('admin'))--}}
+{{--        <a href="{{ route('admin.manage.users') }}" class="button">Manage Users</a>--}}
+{{--        <a href="{{ route('admin.reports') }}" class="button">View Reports</a>--}}
+{{--    @elseif(Auth::user()->isRole('werkgever'))--}}
+        <a href="{{ route('vacature') }}" class="button">Manage Jobs</a>
+{{--    @elseif(Auth::user()->isRole('werknemer'))--}}
+{{--        <a href="{{ route('employee.view.jobs') }}" class="button">View Jobs</a>--}}
+{{--        <a href="{{ route('employee.profile') }}" class="button">My Profile</a>--}}
+{{--    @else--}}
+{{--        <p>You do not have a valid role.</p>--}}
+{{--    @endif--}}
+</div>
+</body>
+</html>
