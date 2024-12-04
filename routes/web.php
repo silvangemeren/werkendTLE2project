@@ -23,4 +23,7 @@ Route::get('/vacatures/create', [VacancyController::class, 'create'])->name('vac
 Route::post('/vacatures/store', [VacancyController::class, 'store'])->name('vacancy.store');
 Route::get('/vacatures/edit', [VacancyController::class, 'edit'])->name('vacancy.edit');
 
+//Route::get("/collega's",[CollegaController::class,'index'])->name('collega.index');
+//Route::get('instellingen',[InstellingController::class,'index'])->name('instellingen.index');
+
 require __DIR__.'/auth.php';
