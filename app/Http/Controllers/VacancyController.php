@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class VacatureController extends Controller
+class VacancyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(){
-        return view('Vacatures.index');
+
     }
 
     /**
@@ -18,7 +18,7 @@ class VacatureController extends Controller
      */
     public function create()
     {
-        //
+        return view('vacancies.create');
     }
 
     /**
@@ -42,7 +42,7 @@ class VacatureController extends Controller
      */
     public function edit()
     {
-        return view('Vacatures.edit');
+        return view('vacancies.edit');
     }
 
     /**

@@ -8,10 +8,6 @@
                 <input name="name" id="name" required placeholder="bv. Albert Heijn"/>
             </div>
             <div>
-                <label for="function">Functie</label>
-                <input name="function" id="function" required placeholder="bv. Manager"/>
-            </div>
-            <div>
                 <label for="description">Omschrijving</label>
                 <input name="description" id="description" required/>
             </div>
@@ -21,6 +17,10 @@
                 <input name="city" id="location" required placeholder="stad"/>
                 <input name="zipcode" id="location" required placeholder="postcode"/>
                 <input name="country" id="location" required placeholder="land"/>
+            </div>
+            <div>
+                <label for="function">Functie</label>
+                <input name="function" id="function" required placeholder="bv. Manager"/>
             </div>
         </div>
 

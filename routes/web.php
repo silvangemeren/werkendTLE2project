@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\VacatureController;
+use App\Http\Controllers\VacancyController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,7 +18,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/vacatures', [VacatureController::class, 'index'])->name('vacature.index');
-Route::get('/vacatures/edit', [VacatureController::class, 'edit'])->name('vacature.edit');
+Route::get('/vacatures', [VacancyController::class, 'index'])->name('vacancy.index');
+Route::get('/vacatures/create', [VacancyController::class, 'create'])->name('vacancy.create');
+Route::get('/vacatures/edit', [VacancyController::class, 'edit'])->name('vacancy.edit');
 
 require __DIR__.'/auth.php';
