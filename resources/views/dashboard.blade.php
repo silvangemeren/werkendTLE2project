@@ -6,12 +6,25 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
+    <div class="dashboard flex justify-center items-center space-x-4">
+        <a href="{{ route('vacancy.index') }}" class="inline-block px-6 py-3 text-white font-semibold text-center rounded-lg" style="background-color: #AA0160; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#AA0160'" onmouseout="this.style.backgroundColor='#AA0160'">
+            Vacatures
+        </a>
+        <a href="{{ route('profile.edit') }}" class="inline-block px-6 py-3 text-white font-semibold text-center rounded-lg" style="background-color: #AA0160; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#AA0160'" onmouseout="this.style.backgroundColor='#AA0160'">
+            Profile
+        </a>
+        <a href="{{ route('dashboard') }}" class="inline-block px-6 py-3 text-white font-semibold text-center rounded-lg" style="background-color: #AA0160; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#AA0160'" onmouseout="this.style.backgroundColor='#AA0160'">
+            Home
+        </a>
+        <a href="{{ route('dashboard') }}" class="inline-block px-6 py-3 text-white font-semibold text-center rounded-lg" style="background-color: #AA0160; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#AA0160'" onmouseout="this.style.backgroundColor='#AA0160'">
+            Inbox
+        </a>
+        <a href="{{ route('dashboard') }}" class="inline-block px-6 py-3 text-white font-semibold text-center rounded-lg" style="background-color: #AA0160; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#AA0160'" onmouseout="this.style.backgroundColor='#AA0160'">
+            Collega's
+        </a>
+        <a href="{{ route('dashboard') }}" class="inline-block px-6 py-3 text-white font-semibold text-center rounded-lg" style="background-color: #AA0160; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#AA0160'" onmouseout="this.style.backgroundColor='#AA0160'">
+            Instellingen
+        </a>
+    </div>
     </div>
 </x-app-layout>
