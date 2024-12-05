@@ -1,5 +1,5 @@
 <x-layout>
-    @vite('resources/css/app.css')
+    @vite('resources/css/create-page.css')
 
     <div class="max-w-4xl mx-auto bg-green-50 p-6 rounded-lg shadow-md">
         <h1 class="text-2xl font-bold text-gray-800 mb-6">Vacature Creëren</h1>
