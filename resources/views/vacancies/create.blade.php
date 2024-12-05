@@ -2,7 +2,7 @@
     @vite('resources/css/app.css')
 
     <div class="max-w-4xl mx-auto bg-green-50 p-6 rounded-lg shadow-md">
-        <h1 class="text-2xl font-bold text-gray-800 mb-6">Vacature Creëren</h1>
+        <h1 class="text-2xl font-bold text-gray-800 mb-6">Vacature Beheren</h1>
 
         <form action="{{ route('vacancy.store') }}" method="post" enctype="multipart/form-data" class="space-y-6">
             @csrf
@@ -39,7 +39,6 @@
                                 name="adres"
                                 id="adres"
                                 required
-                                placeholder="Adres"
                                 class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
                             />
                             <input

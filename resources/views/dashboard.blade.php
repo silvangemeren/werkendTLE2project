@@ -11,7 +11,7 @@
             Vacatures
         </a>
         <a href="{{ route('profile.edit') }}" class="inline-block px-6 py-3 text-white font-semibold text-center rounded-lg" style="background-color: #AA0160; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#AA0160'" onmouseout="this.style.backgroundColor='#AA0160'">
-            Profile
+            Profiel
         </a>
         <a href="{{ route('dashboard') }}" class="inline-block px-6 py-3 text-white font-semibold text-center rounded-lg" style="background-color: #AA0160; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#AA0160'" onmouseout="this.style.backgroundColor='#AA0160'">
             Home
