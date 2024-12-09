@@ -1,6 +1,6 @@
 <x-edit-page-layout>
     <h1>Vacature Creeeren</h1>
-    <form action="{{ route('vacancy.update', ['id' => $vacancy->id]) }}" method="post">
+    <form action="{{ route('vacancy.update', ['id' => $vacancy->id]) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="leftInput">
@@ -33,6 +33,16 @@
             <div>
                 <label for="salary">Salaris</label>
                 <input name="salary" id="salary" placeholder="bv. €30.000 per jaar" required value="{{ old('vacancy', $vacancy->salary) }}"/>
+            </div>
+            <div>
+                <label for="imageUrl" class="block text-sm font-medium text-gray-700">Afbeelding</label>
+                <input
+                    type="file"
+                    name="imageUrl"
+                    id="imageUrl"
+                    required
+                    class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-pink-300 file:rounded-md file:bg-pink-100 file:text-white-700 hover:file:bg-green-200"
+                />
             </div>
         </div>
         <x-primary-button type="submit">Opslaan</x-primary-button>

@@ -103,6 +103,9 @@ class VacancyController extends Controller
     public function update(Request $request,$id)
     {
 
+        $request->file('imageUrl')->store('images', 'public');
+        $imagePath = $request->file('imageUrl')->store('images', 'public');
+
         $location = implode(', ', array_filter([
             $request['adres'],
             $request['stad'],
@@ -118,7 +121,7 @@ class VacancyController extends Controller
         $vacancy->work_hours = $request['work_hours'];
         $vacancy->salary = $request['salary'];
         $vacancy->status = 'available';
-
+        $vacancy->imageUrl = $imagePath;
         $vacancy->save();
         return redirect()->route('vacancy.index');
     }
