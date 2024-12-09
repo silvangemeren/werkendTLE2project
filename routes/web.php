@@ -32,6 +32,7 @@ Route::get('/vacatures/create', [VacancyController::class, 'create'])->name('vac
 Route::post('/vacatures/store', [VacancyController::class, 'store'])->name('vacancy.store');
 Route::get('/vacatures/{id}/edit', [VacancyController::class, 'edit'])->name('vacancy.edit');
 Route::put('/vacatures/{id}/update', [VacancyController::class, 'update'])->name('vacancy.update');
+Route::delete('/review/{id}/destroy', [VacancyController::class, 'destroy'])->name('vacancy.destroy');
 
 //Route::get("/collega's",[CollegaController::class,'index'])->name('collega.index');
 //Route::get('instellingen',[InstellingController::class,'index'])->name('instellingen.index');

@@ -47,4 +47,9 @@
         </div>
         <x-primary-button type="submit">Opslaan</x-primary-button>
     </form>
+    <form action="{{ route('vacancy.destroy', ['id' => $vacancy->id]) }}" method="post">
+        @csrf
+        @method('DELETE')
+        <x-secondary-button type="submit">Delete</x-secondary-button>
+    </form>
 </x-edit-page-layout>
