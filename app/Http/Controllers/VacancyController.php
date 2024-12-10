@@ -12,7 +12,8 @@ class VacancyController extends Controller
      */
     public function index()
     {
-        $vacancies = Vacancy::all();
+        $vacancies = Vacancy::where('status', 'available')->get();
+
         return view('vacancies.index', compact('vacancies'));
     }
 
