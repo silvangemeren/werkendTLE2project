@@ -42,8 +42,7 @@ class VacancyController extends Controller
             return $this->indexForEmployee();
         }
         return response()->view('default-view');
-        // Optionally, you may want to show some default view or throw an
-        // exception if the role is neither 'werkgever' nor 'werknemer'
+
     }
     /**
      * Display a listing of vacancies for the authenticated employer.
@@ -62,19 +61,23 @@ class VacancyController extends Controller
      */
     public function indexForEmployee()
     {
-        $user = auth()->user();
+        $userId = auth()->id(); // Get the logged-in user's ID
 
-        // Fetch all available vacancies
+        // Fetch available vacancies that the user hasn't applied for
         $vacancies = Vacancy::where('status', 'available')
-            ->get()
-            ->each(function ($vacancy) use ($user) {
-                $vacancy->user_has_applied = $vacancy->applications()
-                    ->where('user_id', $user->id)
-                    ->exists();
-            });
+            ->whereNotIn('id', function ($query) use ($userId) {
+                $query->select('vacancy_id')
+                    ->from('applications')
+                    ->where('user_id', $userId);
+            })
+            ->get();
 
         return view('vacancies.employee', compact('vacancies'));
     }
+
+
+
+
 
 
     /**
