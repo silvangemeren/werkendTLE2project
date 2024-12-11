@@ -12,7 +12,8 @@ class VacancyController extends Controller
      */
     public function index()
     {
-        $vacancies = Vacancy::all();
+        $vacancies = Vacancy::where('status', 'available')->get();
+
         return view('vacancies.index', compact('vacancies'));
     }
 
@@ -60,7 +61,7 @@ class VacancyController extends Controller
         $vacancy->function = $request['function'];
         $vacancy->work_hours = $request['work_hours'];
         $vacancy->salary = $request['salary'];
-        $vacancy->status = 'available';
+        $vacancy->status = 'pending';
         $vacancy->imageUrl = $imagePath;
         $vacancy->save();
 

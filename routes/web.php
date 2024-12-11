@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admincontroller;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminVacaturesController;
 use App\Http\Controllers\EmployeeController;
@@ -66,5 +67,7 @@ Route::get('/admin/dashboard', function () {
 
 Route::get('/vacancies', [VacancyController::class, 'index'])->name('vacancies.index');
 
+Route::get('/admin/status', [AdminUsercontroller::class, 'change_status'])->name('change_status');
+Route::get('/admin/{id}/status', [AdminUserController::class, 'status'])->name('status');
 
 require __DIR__ . '/auth.php';
