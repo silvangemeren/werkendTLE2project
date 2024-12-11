@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admincontroller;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\ProfileController;
@@ -45,7 +47,7 @@ Route::delete('/review/{id}/destroy', [VacancyController::class, 'destroy'])->na
 
 Route::get('/vacancies', [VacancyController::class, 'index'])->name('vacancies.index');
 
-Route::get('/admin/status', [Admincontroller::class, 'change_status'])->name('change_status');
-Route::get('/admin/{id}/status', [AdminController::class, 'status'])->name('status');
+Route::get('/admin/status', [AdminUsercontroller::class, 'change_status'])->name('change_status');
+Route::get('/admin/{id}/status', [AdminUserController::class, 'status'])->name('status');
 
 require __DIR__.'/auth.php';
