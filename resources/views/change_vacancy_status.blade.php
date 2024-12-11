@@ -35,7 +35,7 @@
                     <!-- Action Button -->
                     <div>
                         <a href="{{ route('status', $vacancy->id) }}"  class="bg-pink-500 hover:bg-pink-600 text-white text-sm px-4 py-2 rounded-lg shadow">
-                            Change status
+                            Accepteren
                         </a>
                     </div>
                 </div>

@@ -9,9 +9,10 @@ class Admincontroller extends Controller
 {
     public function change_status()
     {
-        $vacancies = Vacancy::all();
+        $vacancies = Vacancy::where('status', 'pending')->get();
         return view('change_vacancy_status', ['vacancies' => $vacancies]);
     }
+
     public function status($id)
     {
         // Haal de vacature op
