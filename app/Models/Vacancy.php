@@ -17,4 +17,11 @@ class Vacancy extends Model
     {
         return $this->belongsTo(User::class, 'employer_id');
     }
+
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class, 'vacancy_id');
+    }
+
 }

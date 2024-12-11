@@ -17,7 +17,7 @@
                 <div class="bg-white rounded-lg shadow-md p-4 flex items-center gap-4">
                     <!-- Vacancy Image -->
                     <div class="w-24 h-24 overflow-hidden rounded-lg">
-                        <img src="{{ asset('/storage/' . $vacancy->imageUrl) }}">
+                        <img src="{{ asset('/storage/' . $vacancy->imageUrl) }}" alt="Vacature Afbeelding">
                     </div>
 
                     <!-- Vacancy Details -->
@@ -28,7 +28,7 @@
                             <span class="material-icons text-gray-500 mr-1">location_on</span> {{ $vacancy->location }}
                         </p>
                         <p class="text-sm text-gray-600 flex items-center">
-                            <span class="material-icons text-yellow-500 mr-1">star</span> {{ $vacancy->rating }} ({{ $vacancy->reviews_count }} reviews)
+                            <span class="material-icons text-yellow-500 mr-1">star</span> {{ $vacancy->rating ?? 'No Ratings Yet' }} ({{ $vacancy->reviews_count ?? 0 }} reviews)
                         </p>
                     </div>
 
