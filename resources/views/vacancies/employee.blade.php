@@ -15,7 +15,7 @@
         </div>
         <!-- Vacancies List -->
         <div class="space-y-4">
-            @forelse($vacancies as $vacancy)
+            @forelse( $searchedVacancies ?? $vacancies as $vacancy)
                 <div class="bg-white rounded-lg shadow-md p-4 flex items-center gap-4">
                     <!-- Vacancy Image -->
                     <div class="w-24 h-24 overflow-hidden rounded-lg">
