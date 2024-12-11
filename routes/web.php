@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admincontroller;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\ProfileController;
@@ -34,6 +33,12 @@ Route::post('/vacatures/store', [VacancyController::class, 'store'])->name('vaca
 Route::get('/vacatures/{id}/edit', [VacancyController::class, 'edit'])->name('vacancy.edit');
 Route::put('/vacatures/{id}/update', [VacancyController::class, 'update'])->name('vacancy.update');
 Route::delete('/review/{id}/destroy', [VacancyController::class, 'destroy'])->name('vacancy.destroy');
+
+//Route::middleware(['auth', AdminMiddleware::class])->group(function () {
+    Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');
+    Route::get('/admin/users/{user}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
+    Route::patch('/admin/users/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
+    Route::delete('/admin/users/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
 
 //Route::get("/collega's",[CollegaController::class,'index'])->name('collega.index');
 //Route::get('instellingen',[InstellingController::class,'index'])->name('instellingen.index');

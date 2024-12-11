@@ -17,8 +17,8 @@
 <body class="font-sans antialiased">
 <div class="min-h-screen bg-gray-100 dark:bg-gray-900 flex flex-col">
 
-    <!-- Include Navigation -->
-    @include('layouts.navigation')
+{{--    <!-- Include Navigation -->--}}
+{{--    @include('layouts.navigation')--}}
 
     <!-- Page Heading -->
     @isset($header)
