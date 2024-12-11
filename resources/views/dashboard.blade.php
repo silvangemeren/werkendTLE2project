@@ -7,48 +7,77 @@
 
     <div class="py-12">
         <div class="dashboard flex flex-wrap justify-center items-center gap-4">
-            <a href="{{ route('vacancy.index') }}"
-               class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
-               style="background-color: #AA0160; transition: background-color 0.3s;"
-               onmouseover="this.style.backgroundColor='#AA0160'"
-               onmouseout="this.style.backgroundColor='#AA0160'">
-                Vacatures
-            </a>
-            <a href="{{ route('profile.edit') }}"
-               class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
-               style="background-color: #AA0160; transition: background-color 0.3s;"
-               onmouseover="this.style.backgroundColor='#AA0160'"
-               onmouseout="this.style.backgroundColor='#AA0160'">
-                Profiel
-            </a>
-            <a href="{{ route('dashboard') }}"
-               class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
-               style="background-color: #AA0160; transition: background-color 0.3s;"
-               onmouseover="this.style.backgroundColor='#AA0160'"
-               onmouseout="this.style.backgroundColor='#AA0160'">
-                Home
-            </a>
-            <a href="{{ route('dashboard') }}"
-               class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
-               style="background-color: #AA0160; transition: background-color 0.3s;"
-               onmouseover="this.style.backgroundColor='#AA0160'"
-               onmouseout="this.style.backgroundColor='#AA0160'">
-                Inbox
-            </a>
-            <a href="{{ route('dashboard') }}"
-               class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
-               style="background-color: #AA0160; transition: background-color 0.3s;"
-               onmouseover="this.style.backgroundColor='#AA0160'"
-               onmouseout="this.style.backgroundColor='#AA0160'">
-                Collega's
-            </a>
-            <a href="{{ route('dashboard') }}"
-               class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
-               style="background-color: #AA0160; transition: background-color 0.3s;"
-               onmouseover="this.style.backgroundColor='#AA0160'"
-               onmouseout="this.style.backgroundColor='#AA0160'">
-                Instellingen
-            </a>
+
+            {{-- WERKEGEVER --}}
+            @if(auth()->user()->role === 'werkgever')
+                <a href="{{ route('vacancy.index') }}"
+                   class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
+                   style="background-color: #AA0160; transition: background-color 0.3s;"
+                   onmouseover="this.style.backgroundColor='#AA0160'"
+                   onmouseout="this.style.backgroundColor='#AA0160'">
+                    Vacatures
+                </a>
+                <a href="{{ route('profile.edit') }}"
+                   class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
+                   style="background-color: #AA0160; transition: background-color 0.3s;"
+                   onmouseover="this.style.backgroundColor='#AA0160'"
+                   onmouseout="this.style.backgroundColor='#AA0160'">
+                    Profiel
+                </a>
+                <a href="{{ route('home') }}"
+                   class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
+                   style="background-color: #AA0160; transition: background-color 0.3s;"
+                   onmouseover="this.style.backgroundColor='#AA0160'"
+                   onmouseout="this.style.backgroundColor='#AA0160'">
+                    Home
+                </a>
+                <a href="{{ route('dashboard') }}"
+                   class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
+                   style="background-color: #AA0160; transition: background-color 0.3s;"
+                   onmouseover="this.style.backgroundColor='#AA0160'"
+                   onmouseout="this.style.backgroundColor='#AA0160'">
+                    Inbox
+                </a>
+                <a href="{{ route('dashboard') }}"
+                   class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
+                   style="background-color: #AA0160; transition: background-color 0.3s;"
+                   onmouseover="this.style.backgroundColor='#AA0160'"
+                   onmouseout="this.style.backgroundColor='#AA0160'">
+                    Collega's
+                </a>
+                <a href="{{ route('dashboard') }}"
+                   class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
+                   style="background-color: #AA0160; transition: background-color 0.3s;"
+                   onmouseover="this.style.backgroundColor='#AA0160'"
+                   onmouseout="this.style.backgroundColor='#AA0160'">
+                    Instellingen
+                </a>
+
+{{--                WERKNEMER--}}
+            @elseif(auth()->user()->role === 'werknemer')
+                <a href="{{ route('dashboard') }}"
+                   class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
+                   style="background-color: #AA0160; transition: background-color 0.3s;"
+                   onmouseover="this.style.backgroundColor='#8c0050'"
+                   onmouseout="this.style.backgroundColor='#AA0160'">
+                    Inbox
+                </a>
+                <a href="{{ route('dashboard') }}"
+                   class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
+                   style="background-color: #AA0160; transition: background-color 0.3s;"
+                   onmouseover="this.style.backgroundColor='#8c0050'"
+                   onmouseout="this.style.backgroundColor='#AA0160'">
+                    Collega's
+                </a>
+                <a href="{{ route('profile.edit') }}"
+                   class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
+                   style="background-color: #AA0160; transition: background-color 0.3s;"
+                   onmouseover="this.style.backgroundColor='#8c0050'"
+                   onmouseout="this.style.backgroundColor='#AA0160'">
+                    Profiel
+                </a>
+            @else
+            @endif
         </div>
     </div>
 </x-app-layout>
