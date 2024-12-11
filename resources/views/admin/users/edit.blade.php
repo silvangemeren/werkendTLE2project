@@ -1,4 +1,4 @@
-<x-layout>
+<x-app-layout>
     <x-slot:heading>
         Edit User - {{ $user->name }}
     </x-slot:heading>
@@ -65,10 +65,10 @@
                 <x-text-input id="city" name="city" type="text" class="mt-1 block w-full" :value="old('city', $user->city)" required autofocus autocomplete="city   " />
                 <x-input-error class="mt-2" :messages="$errors->get('city')" />
             </div>
-
+        </div>
         <div class="flex items-center justify-between mt-6">
             <x-primary-button href="{{ route('admin.users.index') }}">Cancel</x-primary-button>
             <x-primary-button type="submit">Save Changes</x-primary-button>
         </div>
     </form>
-</x-layout>
+</x-app-layout>
