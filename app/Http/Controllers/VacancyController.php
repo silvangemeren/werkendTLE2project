@@ -8,6 +8,32 @@ use Illuminate\Http\Request;
 class VacancyController extends Controller
 {
 
+    public function search(Request $request)
+    {
+        $validatedData = $request->validate([
+            'vacancy' => 'nullable|string|max:255',
+        ]);
+
+        $search = $validatedData['vacancy'];
+
+        if ($search) {
+            $searchedVacancies = Vacancy::where('title', 'LIKE', "%{$search}%")
+                ->orWhere('description', 'LIKE', "%{$search}%")
+                ->orWhere('function', 'LIKE', "%{$search}%")
+                ->where('status', 'available')
+                ->get();
+
+            \Log::info('Found vacancies: ' . $searchedVacancies->count());
+        } else {
+            $vacancies = Vacancy::all();
+        }
+
+        \Log::info('Vacancies data: ' . $searchedVacancies);
+
+        return view('vacancies.employee', compact('searchedVacancies'));
+    }
+
+
     public function index()
     {
         if (auth()->user()->role == 'werkgever') {
@@ -28,6 +54,7 @@ class VacancyController extends Controller
 
         return view('vacancies.employer', compact('vacancies'));
     }
+
 
     /**
      * Display a listing of vacancies available for employees to apply for.
