@@ -89,7 +89,7 @@
                             name="work_hours"
                             id="work_hours"
                             required
-                            placeholder="bv. 40 uur/week"
+                            placeholder="bv. 40"
                             class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
                         />
                     </div>
@@ -100,7 +100,7 @@
                             name="salary"
                             id="salary"
                             required
-                            placeholder="bv. €30.000 per jaar"
+                            placeholder="bv. 30.000"
                             class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
                         />
                     </div>
