@@ -17,8 +17,10 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot()
     {
-        //
+        view()->composer('*', function ($view) {
+            $view->with('vacancies', \App\Models\Vacancy::all());
+        });
     }
 }
