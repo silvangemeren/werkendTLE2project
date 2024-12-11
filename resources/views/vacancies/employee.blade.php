@@ -1,14 +1,21 @@
 <x-layout>
     @vite('resources/css/app.css')
+
     <div class="max-w-4xl mx-auto p-4">
         <!-- Header Section -->
         <div class="flex items-center justify-between mb-4">
             <h1 class="text-2xl font-bold text-gray-800">Beschikbare Vacatures</h1>
         </div>
 
+        <div class="flex items-center justify-between mb-4">
+        <form action="{{ route('vacancy.search') }}" method="GET">
+            <input type="text" name="vacancy" placeholder="Zoek">
+            <x-primary-button type="submit">Zoeken</x-primary-button>
+        </form>
+        </div>
         <!-- Vacancies List -->
         <div class="space-y-4">
-            @foreach($vacancies as $vacancy)
+            @foreach($searchedVacancies ?? $vacancies as $vacancy)
                 <div class="bg-white rounded-lg shadow-md p-4 flex items-center gap-4">
                     <!-- Vacancy Image -->
                     <div class="w-24 h-24 overflow-hidden rounded-lg">

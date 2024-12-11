@@ -28,8 +28,10 @@ Route::middleware('auth')->group(function () {
 
 // Vacancies
 Route::middleware('auth')->group(function () {
+    Route::resource('movie', VacancyController::class);
     Route::get('/vacatures', [VacancyController::class, 'index'])->name('vacancy.employer');
     Route::get('/vacatures/create', [VacancyController::class, 'create'])->name('vacancy.create');
+    Route::get('/vacatures/employee/search', [VacancyController::class, 'search'])->name('vacancy.search');
     Route::post('/vacatures/store', [VacancyController::class, 'store'])->name('vacancy.store');
     Route::get('/vacatures/{id}/edit', [VacancyController::class, 'edit'])->name('vacancy.edit');
     Route::put('/vacatures/{id}/update', [VacancyController::class, 'update'])->name('vacancy.update');
