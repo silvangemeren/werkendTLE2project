@@ -12,7 +12,8 @@ class User extends Authenticatable
 
     /**
      * The attributes that are mass assignable.
-     *
+     * @property int id
+     * @property string role
      * @var array<int, string>
      */
     protected $fillable = [
@@ -26,6 +27,18 @@ class User extends Authenticatable
         'role',
         'company_id', // Optioneel, want het kan null zijn
     ];
+
+
+
+    public function isEmployer(): bool
+    {
+        return $this->role === 'werkgever';
+    }
+
+    public function isEmployee(): bool
+    {
+        return $this->role === 'werknemer';
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -46,4 +59,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'b_date' => 'datetime',
     ];
+
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class, 'user_id');
+    }
+
 }
