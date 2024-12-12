@@ -78,8 +78,12 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('/admin/{id}/status', [AdminUserController::class, 'status'])->name('status');
 });
 
+
+
 // Miscellaneous Routes
 Route::get('/vacancies', [VacancyController::class, 'index'])->name('vacancies.index');
+Route::get('/vacancy/{vacancy}', [VacancyController::class, 'show'])->name('vacancy.show');
+
 
 // Authentication Routes
 require __DIR__ . '/auth.php';

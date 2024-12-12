@@ -217,4 +217,12 @@ class VacancyController extends Controller
 
         return redirect()->route('vacancies.employer')->with('success', 'Vacature succesvol verwijderd.');
     }
+
+    public function show($id)
+    {
+        $vacancy = Vacancy::findOrFail($id); // Fetch the vacancy details
+        return view('vacancy.show', compact('vacancy'));
+    }
 }
+
+
