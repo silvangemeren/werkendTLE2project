@@ -30,18 +30,18 @@ class VacancyController extends Controller
 
         \Log::info('Vacancies data: ' . $searchedVacancies);
 
-        return view('vacancies.employee', compact('searchedVacancies'));
-    }
+        return view('vacancies.employee', compact('searchedVacancies'))->with('userRole', auth()->user()->role);    }
 
 
     public function index()
     {
-        if (auth()->user()->role == 'werkgever') {
+        if (auth()->check() && auth()->user()->role == 'werkgever') { // Explicitly check if user is logged in
             return $this->indexForEmployer();
-        } elseif (auth()->user()->role == 'werknemer') {
+        } elseif (auth()->check() && auth()->user()->role == 'werknemer') { // Explicitly check if user is logged in
             return $this->indexForEmployee();
         }
-        return response()->view('default-view');
+        //return response()->view('default-view'); // Or redirect to login/register if not authenticated
+        return redirect()->route('login'); // Example redirect to login
 
     }
     /**
@@ -72,8 +72,7 @@ class VacancyController extends Controller
             })
             ->get();
 
-        return view('vacancies.employee', compact('vacancies'));
-    }
+        return view('vacancies.employee', compact('vacancies'))->with('userRole', auth()->user()->role);    }
 
 
 
