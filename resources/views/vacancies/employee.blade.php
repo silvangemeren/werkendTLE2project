@@ -16,36 +16,55 @@
         <!-- Vacancies List -->
         <div class="space-y-4">
             @forelse( $searchedVacancies ?? $vacancies as $vacancy)
-                <div class="bg-white rounded-lg shadow-md p-4 flex items-center gap-4">
+                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col sm:flex-row items-center gap-4">
                     <!-- Vacancy Image -->
-                    <div class="w-24 h-24 overflow-hidden rounded-lg">
-                        <img src="{{ asset('/storage/' . $vacancy->imageUrl) }}" alt="Vacature Afbeelding" class="object-cover w-full h-full">
+                    <div class="w-24 h-24 sm:w-32 sm:h-32 overflow-hidden rounded-lg">
+                        <img src="{{ $vacancy->imageUrl ? asset('/storage/' . $vacancy->imageUrl) : 'https://via.placeholder.com/150' }}" alt="Vacature Afbeelding" class="object-cover w-full h-full">
                     </div>
 
                     <!-- Vacancy Details -->
-                    <div class="flex-1">
-                        <h2 class="text-lg font-semibold text-gray-800">{{ $vacancy->title }}</h2>
-                        <p class="text-gray-500">{{ $vacancy->description }}</p>
-                        <div class="mt-2 space-y-1">
-                            <p class="text-sm text-gray-600 flex items-center">
-                                <span class="material-icons text-gray-500 mr-1">location_on</span> {{ $vacancy->location }}
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0 p-4 bg-white rounded-lg shadow-md">
+                        <!-- Title -->
+                        <h2 class="text-lg font-bold text-gray-800 sm:flex-shrink-0 sm:mr-4">{{ $vacancy->title }}</h2>
+
+                        <!-- Description -->
+                        <p class="text-gray-500 sm:flex-1 mt-2 sm:mt-0">
+                            {{ $vacancy->description }}
+                        </p>
+
+                        <!-- Details -->
+                        <div class="mt-4 sm:mt-0 space-y-2">
+                            <!-- Location -->
+                            <p class="text-sm text-black-600 flex items-center">
+                                <span class="font-bold text-gray-800">Location:</span>
+                                <span class="ml-1 text-gray-600">{{ $vacancy->location }}</span>
                             </p>
+
+                            <!-- Function -->
                             <p class="text-sm text-gray-600 flex items-center">
-                                <span class="material-icons text-yellow-500 mr-1">work</span> {{ $vacancy->function }}
+                                <span class="font-bold text-gray-800">Function:</span>
+                                <span class="ml-1">{{ $vacancy->function }}</span>
                             </p>
+
+                            <!-- Work Hours -->
                             <p class="text-sm text-gray-600 flex items-center">
-                                <span class="material-icons text-gray-500 mr-1">schedule</span> {{ $vacancy->work_hours }} uren/week
+                                <span class="font-bold text-gray-800">schedule:</span>
+                                <span class="ml-1">{{ $vacancy->work_hours }} uren/week</span>
                             </p>
+
+                            <!-- Salary -->
                             <p class="text-sm text-gray-600 flex items-center">
-                                <span class="material-icons text-gray-500 mr-1">euro</span> €{{ number_format($vacancy->salary, 2) }}
+                                <span class="font-bold text-gray-800">Salary:</span>
+                                <span class="ml-1">€{{ number_format($vacancy->salary, 2) }}</span>
                             </p>
                         </div>
                     </div>
 
+
                     <!-- Apply Button -->
                     <form action="{{ route('vacancy.apply', ['vacancy' => $vacancy->id]) }}" method="POST" class="inline-block">
                         @csrf
-                        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-2 rounded-lg shadow">
+                        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-2 mt-2 sm:mt-0 sm:ml-4 rounded-lg shadow">
                             Solliciteren
                         </button>
                     </form>
