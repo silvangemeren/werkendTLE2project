@@ -3,13 +3,13 @@
         <!-- Flexbox container for centering -->
         <div class="flex flex-col justify-center items-center w-full flex-1 space-y-8">
             <!-- Employee Button with Blue color and larger size -->
-            <a href="{{ route('employee-page') }}"
+            <a href="{{ route('register.employee') }}"
                class="w-full max-w-md bg-pink-700 text-white text-center py-16 text-2xl font-bold rounded-lg shadow-lg">
                 Werknemer
             </a>
 
             <!-- Employer Button with Green color and larger size -->
-            <a href="{{ route('register') }}"
+            <a href="{{ route('register.employer') }}"
                class="w-full max-w-md bg-pink-700 text-white text-center py-16 text-2xl font-bold rounded-lg shadow-lg">
                 Werkgever
             </a>
