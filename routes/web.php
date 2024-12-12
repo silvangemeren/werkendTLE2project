@@ -4,8 +4,8 @@ use App\Http\Controllers\Admincontroller;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminVacaturesController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\EmployerController;
+use App\Http\Controllers\EmployeeRegistrationController;
+use App\Http\Controllers\EmployerRegistrationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
 use App\Http\Middleware\AdminMiddleware;
@@ -15,10 +15,16 @@ Route::get('/', function () {
     return view('employee-employer');
 })->name('home');
 
-// Employee and Employer Pages
-Route::get('/employee', [EmployeeController::class, 'index'])->name('employee-page');
-Route::get('/employer', [EmployerController::class, 'index'])->name('employer-page');
+// Routes voor werknemer- en werkgever-registratie
+Route::controller(EmployeeRegistrationController::class)->group(function () {
+    Route::get('/register/employee', 'showRegistrationForm')->name('register.employee');
+    Route::post('/register/employee', 'register')->name('register.employee.submit');
+});
 
+Route::controller(EmployerRegistrationController::class)->group(function () {
+    Route::get('/register/employer', 'showRegistrationForm')->name('register.employer');
+    Route::post('/register/employer', 'register')->name('register.employer.submit');
+});
 // Dashboard Route
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'showDashboard'])->name('dashboard');

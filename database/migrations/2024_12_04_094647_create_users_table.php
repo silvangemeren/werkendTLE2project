@@ -13,19 +13,24 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+            $table->rememberToken()->nullable();
             $table->timestamps();
 
             // Add your custom fields here
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->dateTime('b_date');
-            $table->string('city');
-            $table->enum('role', ['werknemer', 'werkgever', 'admin'])->default('werknemer');
+            $table->string('first_name')->nullable();
+
+            $table->string('last_name')->nullable();
+
+            $table->dateTime('b_date')->nullable();
+
+            $table->string('city')->nullable();
+
+            $table->enum('role', ['werknemer', 'werkgever', 'admin'])->default('werknemer')->nullable();
+
             $table->unsignedBigInteger('company_id')->nullable();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('set null');
         });

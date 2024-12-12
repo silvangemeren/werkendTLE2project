@@ -14,10 +14,13 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans antialiased">
-<div class="min-h-screen bg-gray-100 dark:bg-gray-900 flex flex-col">
-
+<body class="font-sans ">
+<div class="min-h-screen bg-[#FBFCF6] flex flex-col">
+    <div class="flex justify-center items-center h-24 bg-white shadow">
+        <img src="{{ asset('images/logo-oh.png') }}" alt="Logo" class="h-20">
+    </div>
 {{--    <!-- Include Navigation -->--}}
+
 {{--    @include('layouts.navigation')--}}
 
     <!-- Page Heading -->
@@ -35,7 +38,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 py-4">
+    <footer class="bg-white border-t border-gray-200 py-4 bg-[#92AA83]">
         <div class="text-center text-sm text-gray-500">
             &copy; {{ date('Y') }} Open Hiring. All Rights Reserved.
         </div>
