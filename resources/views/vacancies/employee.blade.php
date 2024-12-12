@@ -1,4 +1,6 @@
+@include('layouts.navigation')
 <x-layout>
+
     @vite('resources/css/app.css')
 
     <div class="max-w-4xl mx-auto p-4">
@@ -37,7 +39,7 @@
                                 <span class="material-icons text-gray-500 mr-1">schedule</span> {{ $vacancy->work_hours }} uren/week
                             </p>
                             <p class="text-sm text-gray-600 flex items-center">
-                                <span class="material-icons text-gray-500 mr-1">euro</span> €{{ number_format($vacancy->salary, 2) }}
+                                <span class="material-icons text-gray-500 mr-1">euro</span> €{{ ($vacancy->salary) }}
                             </p>
                         </div>
                     </div>
