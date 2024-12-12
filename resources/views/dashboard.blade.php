@@ -4,86 +4,154 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
+    <div class="dashboard flex flex-wrap justify-center items-center gap-4">
 
+    </div>
     <div class="py-12">
         <div class="dashboard flex flex-wrap justify-center items-center gap-4">
 
-            {{-- WERKEGEVER --}}
+            {{-- WERKGEVER --}}
             @if(auth()->user()->role === 'werkgever')
                 <a href="{{ route('vacancy.index') }}"
-                   class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
-                   style="background-color: #AA0160; transition: background-color 0.3s;"
-                   onmouseover="this.style.backgroundColor='#AA0160'"
-                   onmouseout="this.style.backgroundColor='#AA0160'">
+                   class="w-full sm:w-48"
+                   style="
+                       background-color: #AA0160;
+                       color: white;
+                       text-align: center;
+                       padding: 16px;
+                       font-size: 16px;
+                       font-weight: bold;
+                       border-radius: 8px;
+                       box-shadow: 0 4px 1px #7C1A51;
+                       display: block;
+                   ">
                     Vacatures
                 </a>
                 <a href="{{ route('profile.edit') }}"
-                   class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
-                   style="background-color: #AA0160; transition: background-color 0.3s;"
-                   onmouseover="this.style.backgroundColor='#AA0160'"
-                   onmouseout="this.style.backgroundColor='#AA0160'">
+                   class="w-full sm:w-48"
+                   style="
+                       background-color: #AA0160;
+                       color: white;
+                       text-align: center;
+                       padding: 16px;
+                       font-size: 16px;
+                       font-weight: bold;
+                       border-radius: 8px;
+                       box-shadow: 0 4px 1px #7C1A51;
+                       display: block;
+                   ">
                     Profiel
                 </a>
-                <a href="{{ route('home') }}"
-                   class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
-                   style="background-color: #AA0160; transition: background-color 0.3s;"
-                   onmouseover="this.style.backgroundColor='#AA0160'"
-                   onmouseout="this.style.backgroundColor='#AA0160'">
+                <a href="{{ route('dashboard') }}"
+                   class="w-full sm:w-48"
+                   style="
+                       background-color: #AA0160;
+                       color: white;
+                       text-align: center;
+                       padding: 16px;
+                       font-size: 16px;
+                       font-weight: bold;
+                       border-radius: 8px;
+                       box-shadow: 0 4px 1px #7C1A51;
+                       display: block;
+                   ">
                     Home
                 </a>
                 <a href="{{ route('dashboard') }}"
-                   class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
-                   style="background-color: #AA0160; transition: background-color 0.3s;"
-                   onmouseover="this.style.backgroundColor='#AA0160'"
-                   onmouseout="this.style.backgroundColor='#AA0160'">
+                   class="w-full sm:w-48"
+                   style="
+                       background-color: #AA0160;
+                       color: white;
+                       text-align: center;
+                       padding: 16px;
+                       font-size: 16px;
+                       font-weight: bold;
+                       border-radius: 8px;
+                       box-shadow: 0 4px 1px #7C1A51;
+                       display: block;
+                   ">
                     Inbox
                 </a>
                 <a href="{{ route('dashboard') }}"
-                   class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
-                   style="background-color: #AA0160; transition: background-color 0.3s;"
-                   onmouseover="this.style.backgroundColor='#AA0160'"
-                   onmouseout="this.style.backgroundColor='#AA0160'">
+                   class="w-full sm:w-48"
+                   style="
+                       background-color: #AA0160;
+                       color: white;
+                       text-align: center;
+                       padding: 16px;
+                       font-size: 16px;
+                       font-weight: bold;
+                       border-radius: 8px;
+                       box-shadow: 0 4px 1px #7C1A51;
+                       display: block;
+                   ">
                     Collega's
                 </a>
                 <a href="{{ route('dashboard') }}"
-                   class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
-                   style="background-color: #AA0160; transition: background-color 0.3s;"
-                   onmouseover="this.style.backgroundColor='#AA0160'"
-                   onmouseout="this.style.backgroundColor='#AA0160'">
+                   class="w-full sm:w-48"
+                   style="
+                       background-color: #AA0160;
+                       color: white;
+                       text-align: center;
+                       padding: 16px;
+                       font-size: 16px;
+                       font-weight: bold;
+                       border-radius: 8px;
+                       box-shadow: 0 4px 1px #7C1A51;
+                       display: block;
+                   ">
                     Instellingen
                 </a>
-                {{--                WERKNEMER--}}
+
+                {{-- WERKNEMER --}}
             @elseif(auth()->user()->role === 'werknemer')
                 <a href="{{ route('dashboard') }}"
-                   class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
-                   style="background-color: #AA0160; transition: background-color 0.3s;"
-                   onmouseover="this.style.backgroundColor='#8c0050'"
-                   onmouseout="this.style.backgroundColor='#AA0160'">
+                   class="w-full sm:w-48"
+                   style="
+                       background-color: #AA0160;
+                       color: white;
+                       text-align: center;
+                       padding: 16px;
+                       font-size: 16px;
+                       font-weight: bold;
+                       border-radius: 8px;
+                       box-shadow: 0 4px 1px #7C1A51;
+                       display: block;
+                   ">
                     Inbox
                 </a>
                 <a href="{{ route('dashboard') }}"
-                   class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
-                   style="background-color: #AA0160; transition: background-color 0.3s;"
-                   onmouseover="this.style.backgroundColor='#8c0050'"
-                   onmouseout="this.style.backgroundColor='#AA0160'">
+                   class="w-full sm:w-48"
+                   style="
+                       background-color: #AA0160;
+                       color: white;
+                       text-align: center;
+                       padding: 16px;
+                       font-size: 16px;
+                       font-weight: bold;
+                       border-radius: 8px;
+                       box-shadow: 0 4px 1px #7C1A51;
+                       display: block;
+                   ">
                     Collega's
                 </a>
                 <a href="{{ route('profile.edit') }}"
-                   class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
-                   style="background-color: #AA0160; transition: background-color 0.3s;"
-                   onmouseover="this.style.backgroundColor='#8c0050'"
-                   onmouseout="this.style.backgroundColor='#AA0160'">
+                   class="w-full sm:w-48"
+                   style="
+                       background-color: #AA0160;
+                       color: white;
+                       text-align: center;
+                       padding: 16px;
+                       font-size: 16px;
+                       font-weight: bold;
+                       border-radius: 8px;
+                       box-shadow: 0 4px 1px #7C1A51;
+                       display: block;
+                   ">
                     Profiel
                 </a>
-                <a href="{{ route('vacancy.index') }}"
-                   class="w-full sm:w-48 inline-block px-6 py-3 text-white font-semibold text-center rounded-lg"
-                   style="background-color: #AA0160; transition: background-color 0.3s;"
-                   onmouseover="this.style.backgroundColor='#AA0160'"
-                   onmouseout="this.style.backgroundColor='#AA0160'">
-                    Vacatures
-                </a>
-            @else
             @endif
+
         </div>
     </div>
 </x-app-layout>
