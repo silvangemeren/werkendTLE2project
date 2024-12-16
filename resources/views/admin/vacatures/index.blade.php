@@ -10,7 +10,9 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h3 class="mb-6 text-2xl font-semibold">Vacatures List</h3>
-
+                    <a href="{{ route('change_status') }}" class="block p-2 bg-blue-300 text-white rounded-lg shadow hover:bg-blue-600">
+                        Status
+                    </a>
                     <!-- Table view for larger screens -->
                     <div class="hidden md:block">
                         <table class="w-full border-collapse">
