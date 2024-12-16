@@ -23,18 +23,18 @@ class EmployerRegistrationController extends Controller
             'last_name' => ['required', 'string', 'max:255'],
             'b_date' => ['required', 'date'],
             'city' => ['required', 'string', 'max:255'],
-            'company_id' => ['exists:companies,id'],
+            'company_id' => ['nullable'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'confirmed', 'min:8'],
         ]);
 
         $user = User::create([
-            'name' => '',
-            'first_name' => '',
-            'last_name' => '',
-            'b_date' => '',
-            'city' => '',
-            'company_id' => '',
+            'name' => $validated['name'],
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'b_date' => $validated['b_date'],
+            'city' => $validated['city'],
+            'company_id' => isset($validated['company_id']) ? $validated['company_id'] : null, // Optioneel veld
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'role' => 'werkgever',
