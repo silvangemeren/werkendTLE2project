@@ -216,7 +216,7 @@ class VacancyController extends Controller
 
     public function show($id)
     {
-        $vacancy = Vacancy::findOrFail($id); // Fetch the vacancy details
+        $vacancy = Vacancy::findOrFail($id);
         return view('vacancy.show', compact('vacancy'));
     }
 }

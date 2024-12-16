@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/vacatures/store', [VacancyController::class, 'store'])->name('vacancy.store');
     Route::get('/vacatures/{id}/edit', [VacancyController::class, 'edit'])->name('vacancy.edit');
     Route::put('/vacatures/{id}/update', [VacancyController::class, 'update'])->name('vacancy.update');
-    Route::delete('/vacatures/{id}/destroy', [VacancyController::class, 'destroy'])->name('vacancy.destroy');
+    Route::delete('/vacatures/{id}', [VacancyController::class, 'destroy'])->name('vacancy.destroy');
     Route::post('/vacancies/{vacancy}/apply', [VacancyController::class, 'apply'])->name('vacancy.apply');
 });
 
