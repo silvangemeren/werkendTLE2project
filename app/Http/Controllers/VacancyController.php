@@ -22,13 +22,9 @@ class VacancyController extends Controller
                 ->orWhere('function', 'LIKE', "%{$search}%")
                 ->where('status', 'available')
                 ->get();
-
-            \Log::info('Found vacancies: ' . $searchedVacancies->count());
         } else {
-            $vacancies = Vacancy::all();
+            $searchedVacancies = Vacancy::all();
         }
-
-        \Log::info('Vacancies data: ' . $searchedVacancies);
 
         return view('vacancies.employee', compact('searchedVacancies'))->with('userRole', auth()->user()->role);    }
 
