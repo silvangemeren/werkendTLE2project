@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/vacatures/employer', [VacancyController::class, 'indexForEmployer'])->name('vacancies.employer');
     Route::get('/vacatures/employee', [VacancyController::class, 'indexForEmployee'])->name('vacancies.employee');
+    Route::get('/vacatures/search', [VacancyController::class, 'search'])->name('vacancy.search');
     Route::get('/vacatures/{vacatures}', [VacancyController::class, 'show'])->name('vacatures.show');
     Route::get('/vacatures', [VacancyController::class, 'index'])->name('vacancy.index');
     Route::get('/vacatures/create', [VacancyController::class, 'create'])->name('vacancy.create');
