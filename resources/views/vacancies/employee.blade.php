@@ -1,6 +1,4 @@
-@include('layouts.navigation')
-<x-layout>
-
+<x-app-layout>
     @vite('resources/css/app.css')
 
     <div class="max-w-4xl mx-auto p-4">
@@ -11,29 +9,44 @@
 
         <div class="flex items-center justify-between mb-4">
             <form action="{{ route('vacancy.search') }}" method="GET">
-                <input type="text" name="vacancy" placeholder="Zoek">
+                <input type="text" name="vacancy" placeholder="Zoek" class="p-2 border rounded">
                 <x-primary-button type="submit">Zoeken</x-primary-button>
             </form>
         </div>
 
         <!-- Vacancies List -->
-        <div class="space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             @forelse( $searchedVacancies ?? $vacancies as $vacancy)
-                <a href="{{ route('vacancy.show', $vacancy->id) }}" class="block">
-                    <div class="bg-white rounded-lg shadow-md p-4 flex flex-col sm:flex-row items-center gap-4">
-                        <div class="w-24 h-24 sm:w-32 sm:h-32 overflow-hidden rounded-lg">
-                            <img src="{{ $vacancy->imageUrl ? asset('/storage/' . $vacancy->imageUrl) : 'https://via.placeholder.com/150' }}" alt="Vacature Afbeelding" class="object-cover w-full h-full">
+                <div class="block">
+                    <!-- Vacancy Card -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <!-- Vacancy Image -->
+                        <div class="w-full h-64 bg-gray-200 mb-4">
+                            <img src="{{ $vacancy->imageUrl ? asset('/storage/' . $vacancy->imageUrl) : 'https://via.placeholder.com/150' }}" alt="Vacature Afbeelding" class="object-cover w-full h-full rounded-lg">
                         </div>
-                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0 p-4 bg-white rounded-lg shadow-md">
-                            <h2 class="text-lg font-bold text-gray-800 sm:flex-shrink-0 sm:mr-4">{{ $vacancy->title }}</h2>
-                            <p class="text-gray-500 sm:flex-1 mt-2 sm:mt-0">{{ $vacancy->description }}</p>
+
+                        <!-- Vacancy Details -->
+                        <div>
+                            <h2 class="text-xl font-semibold text-gray-800">{{ $vacancy->title }}</h2>
+                            <p class="text-gray-500 mt-2">{{ $vacancy->description }}</p>
+                            <p class="text-gray-500 mt-2">{{ $vacancy->function }}</p>
+                            <p class="text-gray-500 mt-2">{{ $vacancy->salary }}</p>
+                            <p class="text-gray-500 mt-2"><strong>{{ $vacancy->status }}</strong></p>
+
+                        </div>
+
+                        <!-- View Vacancy Button -->
+                        <div class="mt-4">
+                            <a href="{{ route('vacancy.show', $vacancy->id) }}" class="block text-center bg-pink-500 hover:bg-pink-600 text-white text-sm px-4 py-2 rounded-lg shadow mb-4">
+                                Bekijk Vacature
+                            </a>
                         </div>
                     </div>
-                </a>
+                </div>
             @empty
                 <p class="text-gray-500">Geen beschikbare vacatures om op te solliciteren.</p>
             @endforelse
         </div>
     </div>
 
-</x-layout>
+</x-app-layout>

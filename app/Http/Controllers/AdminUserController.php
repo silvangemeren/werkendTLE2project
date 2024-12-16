@@ -53,7 +53,7 @@ class AdminUserController extends Controller
         $vacancy = Vacancy::findOrFail($id);
 
         // Toggle status: bijvoorbeeld van 'pending' naar 'available'
-        $vacancy->status = $vacancy->status === 'pending' ? 'available' : 'pending';
+        $vacancy->status = $vacancy->status === 'pending' ? 'Beschikbaar' : 'pending';
 
         // Sla de wijziging op
         $vacancy->save();
