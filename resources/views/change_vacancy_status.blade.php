@@ -4,16 +4,11 @@
         <!-- Header Section -->
         <div class="flex items-center justify-between mb-4">
             <h1 class="text-2xl font-bold text-gray-800">Vacatures Beheren</h1>
-            <form action="{{ route('vacancy.create') }}" method="GET">
-                <x-primary-button class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg">
-                    Nieuwe Vacature
-                </x-primary-button>
-            </form>
         </div>
 
         <!-- Vacancies List -->
         <div class="space-y-4">
-            @foreach($vacancies as $vacancy)
+            @foreach($vacancies_admin as $vacancy)
                 <div class="bg-white rounded-lg shadow-md p-4 flex items-center gap-4">
                     <!-- Vacancy Image -->
                     <div class="w-24 h-24 overflow-hidden rounded-lg">

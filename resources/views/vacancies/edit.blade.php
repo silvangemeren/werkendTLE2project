@@ -70,16 +70,18 @@
             <x-primary-button type="submit" class="w-full sm:w-auto bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-md">
                 Opslaan
             </x-primary-button>
-            <form action="{{ route('vacancy.destroy', ['id' => $vacancy->id]) }}" method="post">
-                @csrf
-                @method('DELETE')
-                <x-secondary-button type="submit" class="w-full sm:w-auto bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-md">
-                    Verwijderen
-                </x-secondary-button>
-            </form>
         </div>
     </form>
 
+    <form action="{{ route('vacancy.destroy', ['id' => $vacancy->id]) }}" method="post">
+        <div class="flex justify-between mt-8">
+        @csrf
+        @method('DELETE')
+            <x-primary-button type="submit" class="w-full sm:w-auto bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-md">
+            Verwijderen
+            </x-primary-button>
+        </div>
+    </form>
     <!-- Back Button -->
     <div class="mt-6">
         <button onclick="history.back()" class="text-white bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded-md">

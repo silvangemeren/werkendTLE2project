@@ -22,13 +22,9 @@ class VacancyController extends Controller
                 ->orWhere('function', 'LIKE', "%{$search}%")
                 ->where('status', 'available')
                 ->get();
-
-            \Log::info('Found vacancies: ' . $searchedVacancies->count());
         } else {
-            $vacancies = Vacancy::all();
+            $searchedVacancies = Vacancy::all();
         }
-
-        \Log::info('Vacancies data: ' . $searchedVacancies);
 
         return view('vacancies.employee', compact('searchedVacancies'))->with('userRole', auth()->user()->role);    }
 
@@ -220,7 +216,7 @@ class VacancyController extends Controller
 
     public function show($id)
     {
-        $vacancy = Vacancy::findOrFail($id); // Fetch the vacancy details
+        $vacancy = Vacancy::findOrFail($id);
         return view('vacancy.show', compact('vacancy'));
     }
 }
