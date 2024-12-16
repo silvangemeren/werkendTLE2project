@@ -23,6 +23,14 @@
                         {{ __('Vacatures') }}
                     </x-nav-link>
                 @endif
+
+                <!-- Logout Button -->
+                <form method="POST" action="{{ route('logout') }}" class="inline">
+                    @csrf
+                    <button type="submit" class="text-[#FAEC02] text-lg font-extrabold hover:text-red-600">
+                        {{ __('Logout') }}
+                    </button>
+                </form>
             @else
                 <x-nav-link :href="route('vacancy.index')" :active="request()->routeIs('vacancy.index')" class="text-[#FAEC02] text-lg font-extrabold">
                     {{ __('Vacatures') }}
@@ -71,6 +79,17 @@
                         <span class="text-xs">{{ __('Vacatures') }}</span>
                     </a>
                 @endif
+
+                <!-- Logout Button -->
+                <form method="POST" action="{{ route('logout') }}" class="inline">
+                    @csrf
+                    <button type="submit" class="flex flex-col items-center text-[#FAEC02] text-xl font-extrabold">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H3" />
+                        </svg>
+                        <span class="text-xs">{{ __('Logout') }}</span>
+                    </button>
+                </form>
             @else
                 <a href="{{ route('vacancy.index') }}" class="flex flex-col items-center text-[#FAEC02] text-xl font-extrabold">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -79,22 +98,7 @@
                     <span class="text-xs">{{ __('Vacatures') }}</span>
                 </a>
             @endauth
-
-            <!-- Inbox Button -->
-            <a href="{{ route('home') }}" class="flex flex-col items-center text-[#FAEC02] text-xl font-extrabold">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7-7 7 7M5 19h14a2 2 0 002-2V9H3v8a2 2 0 002 2z" />
-                </svg>
-                <span class="text-xs">{{ __('Inbox') }}</span>
-            </a>
-
-            <!-- Profile Button -->
-            <a href="{{ route('profile.edit') }}" class="flex flex-col items-center text-[#FAEC02] text-xl font-extrabold">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3a7 7 0 1014 0M5 17h14" />
-                </svg>
-                <span class="text-xs">{{ __('Profile') }}</span>
-            </a>
         </div>
     </div>
 </nav>
+
