@@ -11,13 +11,6 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h3 class="mb-6 text-2xl font-semibold">Vacatures List</h3>
 
-                    <div class="mb-6">
-                        <a href="{{ route('admin.vacatures.create') }}"
-                           class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                            + Add New Vacature
-                        </a>
-                    </div>
-
                     <!-- Table view for larger screens -->
                     <div class="hidden md:block">
                         <table class="w-full border-collapse">

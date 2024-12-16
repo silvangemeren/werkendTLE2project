@@ -1,4 +1,4 @@
-<x-app-layout-2>
+<x-app-layout>
     <x-slot name="slot">
         <div class="flex flex-col justify-center items-center w-full flex-1 space-y-8">
             <div>
@@ -58,4 +58,4 @@
             </div>
         </div>
     </x-slot>
-</x-app-layout-2>
+</x-app-layout>
