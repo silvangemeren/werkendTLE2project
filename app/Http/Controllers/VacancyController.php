@@ -121,7 +121,6 @@ class VacancyController extends Controller
             'imageUrl' => $imagePath,
             'employer_id' => auth()->id(),
         ]);
-
         return redirect()->route('vacancies.employer')->with('success', 'Vacature succesvol aangemaakt.');
     }
 
