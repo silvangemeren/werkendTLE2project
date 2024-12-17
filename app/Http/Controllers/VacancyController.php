@@ -45,8 +45,8 @@ class VacancyController extends Controller
      */
     public function indexForEmployer()
     {
-        $vacancies = Vacancy::where('employer_id', auth()->id())->get();
-        return view('vacancies.employer', compact('vacancies'));
+        $employer_vacancies = Vacancy::where('employer_id', auth()->id())->get();
+        return view('vacancies.employer', compact('employer_vacancies'));
     }
 
 
@@ -126,6 +126,10 @@ class VacancyController extends Controller
     public function edit($id)
     {
         $vacancy = Vacancy::findOrFail($id);
+
+        if ($vacancy->employer_id !== auth()->id()) {
+            return redirect()->route('vacancies.employer');
+        }
 
         $locationParts = explode(', ', $vacancy->location);
 
@@ -218,6 +222,11 @@ class VacancyController extends Controller
     public function destroy($id)
     {
         $vacancy = Vacancy::findOrFail($id);
+
+        if ($vacancy->employer_id !== auth()->id()) {
+            return redirect()->route('vacancies.employer');
+        }
+
 
         $vacancy->delete();
 
