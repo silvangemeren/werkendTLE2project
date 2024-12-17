@@ -8,12 +8,14 @@
             </a>
         </div>
 
-        <!-- Center: Navigation Links, with flex-grow to maintain centering -->
-        <div class="flex space-x-8 items-center justify-center flex-grow">
+        <!-- Navigation Links -->
+        <div class="flex space-x-8 items-center justify-center">
+            @auth
+                @if(auth()->user()->role === 'werkgever' || 'werknemer')
             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-[#FAEC02] text-lg font-extrabold">
                 {{ __('Home') }}
             </x-nav-link>
-            @auth
+                @endif
                 @if(auth()->user()->role === 'werkgever')
                     <x-nav-link :href="route('vacancies.employer')" :active="request()->routeIs('vacancies.employer')" class="text-[#FAEC02] text-lg font-extrabold">
                         {{ __('Vacatures') }}
@@ -23,8 +25,19 @@
                         {{ __('Vacatures') }}
                     </x-nav-link>
                 @endif
+
+                <!-- Logout Button -->
+                <form method="POST" action="{{ route('logout') }}" class="inline">
+                    @csrf
+                    <button type="button" id="logoutButton" class="text-[#FAEC02] text-lg font-extrabold hover:text-red-600">
+                        {{ __('Logout') }}
+                    </button>
+                </form>
             @else
-                <x-nav-link :href="route('vacancy.index')" :active="request()->routeIs('vacancy.index')" class="text-[#FAEC02] text-lg font-extrabold">
+                <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="text-[#FAEC02] text-lg font-extrabold">
+                    {{ __('Home') }}
+                </x-nav-link>
+                <x-nav-link :href="route('vacancies.guest')" :active="request()->routeIs('vacancies.guest')" class="text-[#FAEC02] text-lg font-extrabold">
                     {{ __('Vacatures') }}
                 </x-nav-link>
             @endauth
@@ -84,7 +97,7 @@
                     </a>
                 @endif
 
-                <!-- Logout Button (only visible to authenticated users) -->
+                <!-- Logout Button -->
                 <form method="POST" action="{{ route('logout') }}" class="inline">
                     @csrf
                     <button type="button" id="logoutButton" class="flex flex-col items-center text-[#FAEC02] text-xl font-extrabold">
@@ -140,3 +153,5 @@
         logoutModal.classList.add('hidden');
     });
 </script>
+
+

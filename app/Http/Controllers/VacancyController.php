@@ -28,6 +28,25 @@ class VacancyController extends Controller
 
         return view('vacancies.employee', compact('searchedVacancies'))->with('userRole', auth()->user()->role);    }
 
+public function guestSearch(Request $request){
+    $validatedData = $request->validate([
+        'vacancy' => 'nullable|string|max:255',
+    ]);
+
+    $guestSearch = $validatedData['vacancy'];
+
+    if ($guestSearch) {
+        $searchedGuestVacancies = Vacancy::where('title', 'LIKE', "%{$guestSearch}%")
+            ->orWhere('description', 'LIKE', "%{$guestSearch}%")
+            ->orWhere('function', 'LIKE', "%{$guestSearch}%")
+            ->where('status', 'available')
+            ->get();
+    } else {
+        $searchedGuestVacancies = Vacancy::all();
+    }
+
+    return view('vacancies.guest', compact('searchedGuestVacancies'));
+}
 
     public function index()
     {
@@ -78,6 +97,12 @@ class VacancyController extends Controller
 
         return view('vacancies.employee', compact('vacancies', 'appliedVacancyIds'))->with('userRole', auth()->user()->role);
     }
+
+    public function indexForGuest(){
+        return view('vacancies.guest');
+    }
+
+
     /**
      * Show the form for creating a new vacancy.
      */
