@@ -31,12 +31,6 @@ class VacancyController extends Controller
 
     public function index()
     {
-        if (auth()->check() && auth()->user()->role == 'werkgever') { // Explicitly check if user is logged in
-            return $this->indexForEmployer();
-        } elseif (auth()->check() && auth()->user()->role == 'werknemer') { // Explicitly check if user is logged in
-            return $this->indexForEmployee();
-        }
-        //return response()->view('default-view'); // Or redirect to login/register if not authenticated
         return redirect()->route('login'); // Example redirect to login
 
     }
@@ -45,7 +39,16 @@ class VacancyController extends Controller
      */
     public function indexForEmployer()
     {
+
+        if (auth()->check() && auth()->user()->role == 'werknemer') { // Explicitly check if user is logged in
+            return $this->indexForEmployee();
+        }
+        if (auth()->check() && auth()->user()->role == 'admin') { // Explicitly check if user is logged in
+            return view('admin.admin-dashboard');
+        }
+
         $employer_vacancies = Vacancy::where('employer_id', auth()->id())->get();
+
         return view('vacancies.employer', compact('employer_vacancies'));
     }
 
@@ -55,6 +58,13 @@ class VacancyController extends Controller
      */
     public function indexForEmployee()
     {
+        if (auth()->check() && auth()->user()->role == 'werkgever') { // Explicitly check if user is logged in
+            return $this->indexForEmployer();
+        }
+        if (auth()->check() && auth()->user()->role == 'admin') { // Explicitly check if user is logged in
+            return view('admin.admin-dashboard');
+        }
+
         $userId = auth()->id(); // Get the logged-in user's ID
 
         // Fetch available vacancies
