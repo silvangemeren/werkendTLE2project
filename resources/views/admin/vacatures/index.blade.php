@@ -42,7 +42,7 @@
                                     <td class="px-4 py-3 text-sm">{{ $vacature->salary }}</td>
                                     <td class="px-4 py-3 text-sm">{{ $vacature->status }}</td>
                                     <td class="px-4 py-3 text-sm">
-                                        <img src="{{ $vacature->imageUrl }}" alt="Vacature Image" class="h-16 w-16 object-cover rounded">
+                                        <img src="{{ $vacature->imageUrl ? asset('/storage/' . $vacature->imageUrl) : 'https://via.placeholder.com/150' }}" alt="Vacature Image" class="h-16 w-16 object-cover rounded">
                                     </td>
                                     <td class="px-4 py-3 text-sm space-x-2">
                                         <a href="{{ route('admin.vacatures.edit', $vacature) }}"

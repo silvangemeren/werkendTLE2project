@@ -31,12 +31,6 @@ class VacancyController extends Controller
 
     public function index()
     {
-        if (auth()->check() && auth()->user()->role == 'werkgever') { // Explicitly check if user is logged in
-            return $this->indexForEmployer();
-        } elseif (auth()->check() && auth()->user()->role == 'werknemer') { // Explicitly check if user is logged in
-            return $this->indexForEmployee();
-        }
-        //return response()->view('default-view'); // Or redirect to login/register if not authenticated
         return redirect()->route('login'); // Example redirect to login
 
     }
@@ -45,10 +39,17 @@ class VacancyController extends Controller
      */
     public function indexForEmployer()
     {
-        // Fetch vacancies created by the logged-in employer
-        $vacancies = Vacancy::where('employer_id', auth()->id())->get();
 
-        return view('vacancies.employer', compact('vacancies'));
+        if (auth()->check() && auth()->user()->role == 'werknemer') { // Explicitly check if user is logged in
+            return $this->indexForEmployee();
+        }
+        if (auth()->check() && auth()->user()->role == 'admin') { // Explicitly check if user is logged in
+            return view('admin.admin-dashboard');
+        }
+
+        $employer_vacancies = Vacancy::where('employer_id', auth()->id())->get();
+
+        return view('vacancies.employer', compact('employer_vacancies'));
     }
 
 
@@ -57,22 +58,26 @@ class VacancyController extends Controller
      */
     public function indexForEmployee()
     {
+        if (auth()->check() && auth()->user()->role == 'werkgever') { // Explicitly check if user is logged in
+            return $this->indexForEmployer();
+        }
+        if (auth()->check() && auth()->user()->role == 'admin') { // Explicitly check if user is logged in
+            return view('admin.admin-dashboard');
+        }
+
         $userId = auth()->id(); // Get the logged-in user's ID
 
-        // Fetch available vacancies that the user hasn't applied for
-        $vacancies = Vacancy::where('status', 'available')
-            ->whereNotIn('id', function ($query) use ($userId) {
-                $query->select('vacancy_id')
-                    ->from('applications')
-                    ->where('user_id', $userId);
-            })
-            ->get();
+        // Fetch available vacancies
+        $vacancies = Vacancy::where('status', 'available')->get();
 
-        return view('vacancies.employee', compact('vacancies'))->with('userRole', auth()->user()->role);    }
+        // Get the list of vacancy IDs the user has already applied for
+        $appliedVacancyIds = \DB::table('applications')
+            ->where('user_id', $userId)
+            ->pluck('vacancy_id')
+            ->toArray();
 
-
-
-
+        return view('vacancies.employee', compact('vacancies', 'appliedVacancyIds'))->with('userRole', auth()->user()->role);
+    }
 
 
     /**
@@ -96,9 +101,9 @@ class VacancyController extends Controller
             'postcode' => 'required|string|max:20',
             'land' => 'required|string|max:255',
             'function' => 'required|string|max:255',
-            'work_hours' => 'required|integer|min:1',
+            'work_hours' => 'required|string|min:1',
             'imageUrl' => 'required|file|mimes:jpeg,png,jpg,gif|max:4048',
-            'salary' => 'required|integer|min:0',
+            'salary' => 'required|string|min:0',
         ]);
 
         $imagePath = $request->file('imageUrl')->store('images', 'public');
@@ -117,7 +122,7 @@ class VacancyController extends Controller
             'function' => $validated['function'],
             'work_hours' => $validated['work_hours'],
             'salary' => $validated['salary'],
-            'status' => 'available',
+            'status' => 'pending',
             'imageUrl' => $imagePath,
             'employer_id' => auth()->id(),
         ]);
@@ -131,6 +136,10 @@ class VacancyController extends Controller
     public function edit($id)
     {
         $vacancy = Vacancy::findOrFail($id);
+
+        if ($vacancy->employer_id !== auth()->id()) {
+            return redirect()->route('vacancies.employer');
+        }
 
         $locationParts = explode(', ', $vacancy->location);
 
@@ -157,9 +166,9 @@ class VacancyController extends Controller
             'postcode' => 'required|string|max:20',
             'land' => 'required|string|max:255',
             'function' => 'required|string|max:255',
-            'work_hours' => 'required|integer|min:1',
+            'work_hours' => 'required|string|min:1',
             'imageUrl' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
-            'salary' => 'required|integer|min:0',
+            'salary' => 'required|string|min:0',
         ]);
 
         if ($request->hasFile('imageUrl')) {
@@ -181,7 +190,7 @@ class VacancyController extends Controller
             'function' => $validated['function'],
             'work_hours' => $validated['work_hours'],
             'salary' => $validated['salary'],
-            'status' => 'available',
+            'status' => 'pending',
         ]);
 
         return redirect()->route('vacancies.employer')->with('success', 'Vacature succesvol bijgewerkt.');
@@ -193,14 +202,29 @@ class VacancyController extends Controller
     public function apply($id)
     {
         $vacancy = Vacancy::findOrFail($id);
+        $userId = auth()->id(); // Get the authenticated user's ID
 
-        auth()->user()->applications()->create([
+        // Check if the user has already applied to this vacancy
+        $existingApplication = \DB::table('applications')
+            ->where('user_id', $userId)
+            ->where('vacancy_id', $vacancy->id)
+            ->first();
+
+        if ($existingApplication) {
+            return redirect()->route('vacancies.employee')->with('error', 'Je hebt al gesolliciteerd op deze vacature.');
+        }
+
+        // Create a new application
+        \DB::table('applications')->insert([
+            'user_id' => $userId,
             'vacancy_id' => $vacancy->id,
-            'status' => 'pending',
+            'status' => 'submitted',
+            'applied_at' => now(),
         ]);
 
         return redirect()->route('vacancies.employee')->with('success', 'Je hebt succesvol gesolliciteerd!');
     }
+
 
     /**
      * Remove the specified vacancy from storage.
@@ -208,6 +232,11 @@ class VacancyController extends Controller
     public function destroy($id)
     {
         $vacancy = Vacancy::findOrFail($id);
+
+        if ($vacancy->employer_id !== auth()->id()) {
+            return redirect()->route('vacancies.employer');
+        }
+
 
         $vacancy->delete();
 

@@ -14,7 +14,7 @@
 
         <!-- Vacancies List -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-            @foreach($vacancies as $vacancy)
+            @foreach($employer_vacancies as $vacancy)
                 <div class="block">
                     <!-- Vacancy Card -->
                     <div class="bg-white rounded-lg shadow-md p-6">
