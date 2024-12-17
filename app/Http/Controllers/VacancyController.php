@@ -59,20 +59,17 @@ class VacancyController extends Controller
     {
         $userId = auth()->id(); // Get the logged-in user's ID
 
-        // Fetch available vacancies that the user hasn't applied for
-        $vacancies = Vacancy::where('status', 'available')
-            ->whereNotIn('id', function ($query) use ($userId) {
-                $query->select('vacancy_id')
-                    ->from('applications')
-                    ->where('user_id', $userId);
-            })
-            ->get();
+        // Fetch available vacancies
+        $vacancies = Vacancy::where('status', 'available')->get();
 
-        return view('vacancies.employee', compact('vacancies'))->with('userRole', auth()->user()->role);    }
+        // Get the list of vacancy IDs the user has already applied for
+        $appliedVacancyIds = \DB::table('applications')
+            ->where('user_id', $userId)
+            ->pluck('vacancy_id')
+            ->toArray();
 
-
-
-
+        return view('vacancies.employee', compact('vacancies', 'appliedVacancyIds'))->with('userRole', auth()->user()->role);
+    }
 
 
     /**
@@ -193,14 +190,29 @@ class VacancyController extends Controller
     public function apply($id)
     {
         $vacancy = Vacancy::findOrFail($id);
+        $userId = auth()->id(); // Get the authenticated user's ID
 
-        auth()->user()->applications()->create([
+        // Check if the user has already applied to this vacancy
+        $existingApplication = \DB::table('applications')
+            ->where('user_id', $userId)
+            ->where('vacancy_id', $vacancy->id)
+            ->first();
+
+        if ($existingApplication) {
+            return redirect()->route('vacancies.employee')->with('error', 'Je hebt al gesolliciteerd op deze vacature.');
+        }
+
+        // Create a new application
+        \DB::table('applications')->insert([
+            'user_id' => $userId,
             'vacancy_id' => $vacancy->id,
-            'status' => 'pending',
+            'status' => 'submitted',
+            'applied_at' => now(),
         ]);
 
         return redirect()->route('vacancies.employee')->with('success', 'Je hebt succesvol gesolliciteerd!');
     }
+
 
     /**
      * Remove the specified vacancy from storage.
