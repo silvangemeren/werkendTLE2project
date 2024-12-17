@@ -54,28 +54,24 @@
     <!-- Mobile Navigation -->
     <div class="fixed bottom-0 inset-x-0 bg-[#2E342A] shadow-lg border-t border-gray-100 dark:border-gray-700 sm:hidden">
         <div class="flex justify-around items-center h-16">
+
             <!-- Home Button -->
-            <a href="{{ route('home') }}" class="flex flex-col items-center text-[#FAEC02] text-xl font-extrabold">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10l7-7m0 0l7 7M7 10v10h10V10M4 21h16" />
-                </svg>
-                <span class="text-xs">{{ __('Home') }}</span>
+            <a href="{{ route('dashboard') }}" class="flex flex-col items-center text-[#FAEC02] text-xl font-extrabold">
+                <img src="{{ asset('images/Icons/Dashboard_nav.svg') }}" alt="Logout Icon" class="h-6 w-6">
+                <span class="text-xs">{{ __('Dashboard') }}</span>
             </a>
 
             <!-- Vacatures Button -->
             @auth
                 @if(auth()->user()->role === 'werkgever')
                     <a href="{{ route('vacancies.employer') }}" class="flex flex-col items-center text-[#FAEC02] text-xl font-extrabold">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 6h14M5 18h14" />
-                        </svg>
+                        <img src="{{ asset('images/Icons/Vacancy_nav.svg') }}" alt="Logout Icon" class="h-6 w-6">
                         <span class="text-xs">{{ __('Vacatures') }}</span>
                     </a>
+
                 @elseif(auth()->user()->role === 'werknemer')
                     <a href="{{ route('vacancies.employee') }}" class="flex flex-col items-center text-[#FAEC02] text-xl font-extrabold">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 6h14M5 18h14" />
-                        </svg>
+                        <img src="{{ asset('images/Icons/Vacancy_nav.svg') }}" alt="Logout Icon" class="h-6 w-6">
                         <span class="text-xs">{{ __('Vacatures') }}</span>
                     </a>
                 @endif
@@ -84,20 +80,24 @@
                 <form method="POST" action="{{ route('logout') }}" class="inline">
                     @csrf
                     <button type="submit" class="flex flex-col items-center text-[#FAEC02] text-xl font-extrabold">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H3" />
-                        </svg>
+                        <img src="{{ asset('images/Icons/Logout_nav.svg') }}" alt="Logout Icon" class="h-6 w-6">
                         <span class="text-xs">{{ __('Logout') }}</span>
                     </button>
                 </form>
             @else
                 <a href="{{ route('vacancy.index') }}" class="flex flex-col items-center text-[#FAEC02] text-xl font-extrabold">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 6h14M5 18h14" />
-                    </svg>
+                    <img src="{{ asset('images/Icons/Vacancy_nav.svg') }}" alt="Logout Icon" class="h-6 w-6">
                     <span class="text-xs">{{ __('Vacatures') }}</span>
                 </a>
+
             @endauth
+
+            @guest
+                <a href="{{ route('login') }}" class="flex flex-col items-center text-[#FAEC02] text-xl font-extrabold">
+                    <img src="{{ asset('images/Icons/Login_nav.svg') }}" alt="Login Icon" class="h-6 w-6">
+                    <span class="text-xs">{{ __('Log In') }}</span>
+                </a>
+            @endguest
         </div>
     </div>
 </nav>
