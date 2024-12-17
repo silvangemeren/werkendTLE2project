@@ -97,7 +97,7 @@ class VacancyController extends Controller
             'land' => 'required|string|max:255',
             'function' => 'required|string|max:255',
             'work_hours' => 'required|integer|min:1',
-            'imageUrl' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
+            'imageUrl' => 'required|file|mimes:jpeg,png,jpg,gif|max:4048',
             'salary' => 'required|integer|min:0',
         ]);
 
