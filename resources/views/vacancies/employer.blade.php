@@ -19,6 +19,7 @@
                     <!-- Vacancy Card -->
                     <div class="bg-white rounded-lg shadow-md p-6">
                         <!-- Vacancy Image -->
+
                         <div class="w-full h-64 bg-gray-200 mb-4">
                             <img src="{{ asset('/storage/' . $vacancy->imageUrl) }}" alt="Vacature Afbeelding" class="object-cover w-full h-full rounded-lg">
                         </div>

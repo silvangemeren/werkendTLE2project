@@ -24,12 +24,6 @@
                         Instellingen
                     </a>
 
-                    <!-- Logout button inside a flex container -->
-                    <div class="w-full sm:w-48 lg:w-48 flex justify-center">
-                        <button type="button" id="logoutButton" class="w-full sm:w-auto px-4 py-2 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none">
-                            Logout
-                        </button>
-                    </div>
                 </div>
 
                 {{-- WERKNEMER --}}
@@ -48,12 +42,6 @@
                         Instellingen
                     </a>
 
-                    <!-- Logout button inside a flex container -->
-                    <div class="w-full sm:w-48 lg:w-48 flex justify-center">
-                        <button type="button" id="logoutButton" class="w-full sm:w-auto px-4 py-2 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none">
-                            Log uit
-                        </button>
-                    </div>
                 </div>
             @elseif(auth()->user()->role === 'admin')
                     <x-slot name="header">

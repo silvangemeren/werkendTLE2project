@@ -11,7 +11,7 @@ class Vacancy extends Model
 
     protected $table = 'vacancies';
 
-    protected $fillable = ['title', 'description','location', 'function', 'work_hours', 'salary', 'status', 'employer_id',];
+    protected $fillable = ['title', 'description','location', 'function', 'work_hours', 'salary', 'status', 'employer_id','imageUrl'];
 
     public function employer()
     {
