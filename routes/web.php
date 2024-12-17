@@ -34,6 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/vacatures/guest', [VacancyController::class, 'indexForGuest'])->name('vacancies.guest');
+Route::get('/vacatures/guest/search', [VacancyController::class, 'guestSearch'])->name('vacancies.guestSearch');
+
 // Vacancies for Employers and Employees
 Route::middleware('auth')->group(function () {
     Route::get('/vacatures/create', [VacancyController::class, 'create'])->name('vacancy.create');

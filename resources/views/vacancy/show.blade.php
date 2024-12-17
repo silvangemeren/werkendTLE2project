@@ -1,9 +1,23 @@
 <x-app-layout>
     <div class="max-w-4xl mx-auto p-4">
         <!-- Back Button -->
-        <a href="{{ route('vacancy.index') }}" class="inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm px-4 py-2 rounded-lg shadow mb-4">
-            ← Terug naar Vacatures
-        </a>
+
+        @auth
+            @if(auth()->user()->role === 'werknemer')
+                <a href="{{ route('vacancies.employee') }}" class="inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm px-4 py-2 rounded-lg shadow mb-4">
+                    ← Terug naar Vacatures
+                </a>
+            @endif
+        @endauth
+
+        @guest
+            <a href="{{ route('vacancies.guest') }}" class="inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm px-4 py-2 rounded-lg shadow mb-4">
+                ← Terug naar Vacatures
+            </a>
+        @endguest
+
+
+
 
         <div class="bg-white rounded-lg shadow-md p-4">
             <!-- Image -->
