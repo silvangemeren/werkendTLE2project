@@ -45,9 +45,7 @@ class VacancyController extends Controller
      */
     public function indexForEmployer()
     {
-        // Fetch vacancies created by the logged-in employer
         $vacancies = Vacancy::where('employer_id', auth()->id())->get();
-
         return view('vacancies.employer', compact('vacancies'));
     }
 
@@ -117,7 +115,7 @@ class VacancyController extends Controller
             'function' => $validated['function'],
             'work_hours' => $validated['work_hours'],
             'salary' => $validated['salary'],
-            'status' => 'available',
+            'status' => 'pending',
             'imageUrl' => $imagePath,
             'employer_id' => auth()->id(),
         ]);
@@ -181,7 +179,7 @@ class VacancyController extends Controller
             'function' => $validated['function'],
             'work_hours' => $validated['work_hours'],
             'salary' => $validated['salary'],
-            'status' => 'available',
+            'status' => 'pending',
         ]);
 
         return redirect()->route('vacancies.employer')->with('success', 'Vacature succesvol bijgewerkt.');
