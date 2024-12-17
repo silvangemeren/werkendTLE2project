@@ -1,4 +1,4 @@
-<x-layout>
+<x-app-layout>
     @vite('resources/css/create-page.css')
 
     <div class="max-w-4xl mx-auto bg-green-50 p-6 rounded-lg shadow-md">
@@ -128,4 +128,4 @@
             </div>
         </form>
     </div>
-</x-layout>
+</x-app-layout>

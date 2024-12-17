@@ -78,8 +78,6 @@ class VacancyController extends Controller
 
         return view('vacancies.employee', compact('vacancies', 'appliedVacancyIds'))->with('userRole', auth()->user()->role);
     }
-
-
     /**
      * Show the form for creating a new vacancy.
      */
