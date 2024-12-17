@@ -10,10 +10,12 @@
 
         <!-- Navigation Links -->
         <div class="flex space-x-8 items-center justify-center">
+            @auth
+                @if(auth()->user()->role === 'werkgever' || 'werknemer')
             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-[#FAEC02] text-lg font-extrabold">
                 {{ __('Home') }}
             </x-nav-link>
-            @auth
+                @endif
                 @if(auth()->user()->role === 'werkgever')
                     <x-nav-link :href="route('vacancies.employer')" :active="request()->routeIs('vacancies.employer')" class="text-[#FAEC02] text-lg font-extrabold">
                         {{ __('Vacatures') }}
@@ -32,6 +34,9 @@
                     </button>
                 </form>
             @else
+                <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="text-[#FAEC02] text-lg font-extrabold">
+                    {{ __('Home') }}
+                </x-nav-link>
                 <x-nav-link :href="route('vacancies.guest')" :active="request()->routeIs('vacancies.guest')" class="text-[#FAEC02] text-lg font-extrabold">
                     {{ __('Vacatures') }}
                 </x-nav-link>
