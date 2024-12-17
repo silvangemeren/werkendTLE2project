@@ -1,8 +1,8 @@
 <nav x-data="{ open: false }" class="bg-[#2E342A] border-b border-gray-100 dark:border-gray-700 sm:relative sm:top-0 sm:h-20">
     <!-- Desktop Navigation -->
-    <div class="hidden sm:flex max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 justify-center items-center h-20">
-        <!-- Logo -->
-        <div class="flex items-center mr-8">
+    <div class="hidden sm:flex max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 justify-between items-center h-20">
+        <!-- Left: Logo -->
+        <div class="flex items-center">
             <a href="{{ route('dashboard') }}">
                 <x-application-logo class="block h-12 w-auto fill-current text-[#FAEC02]" />
             </a>
@@ -54,6 +54,18 @@
                 {{ __('Profile') }}
             </x-nav-link>
         </div>
+
+        <!-- Right: Logout Button (only visible to authenticated users) -->
+        @auth
+            <div>
+                <form method="POST" action="{{ route('logout') }}" class="inline">
+                    @csrf
+                    <button type="button" id="logoutButton" class="text-[#FAEC02] text-lg font-extrabold hover:text-red-600">
+                        {{ __('Logout') }}
+                    </button>
+                </form>
+            </div>
+        @endauth
     </div>
 
     <!-- Mobile Navigation -->
