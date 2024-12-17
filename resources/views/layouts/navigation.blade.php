@@ -32,7 +32,7 @@
                     </button>
                 </form>
             @else
-                <x-nav-link :href="route('vacancy.index')" :active="request()->routeIs('vacancy.index')" class="text-[#FAEC02] text-lg font-extrabold">
+                <x-nav-link :href="route('vacancies.guest')" :active="request()->routeIs('vacancies.guest')" class="text-[#FAEC02] text-lg font-extrabold">
                     {{ __('Vacatures') }}
                 </x-nav-link>
             @endauth
