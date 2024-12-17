@@ -5,7 +5,7 @@
             @if(auth()->user()->role === 'werkgever')
                 <!-- WERKGEVER content -->
                 <div class="flex flex-wrap justify-center gap-4">
-                    <a href="{{ route('vacancy.index') }}" class="w-full sm:w-48 lg:w-48" style="background-color: #AA0160; color: white; text-align: center; padding: 16px; font-size: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
+                    <a href="{{ route('vacancies.employer') }}" class="w-full sm:w-48 lg:w-48" style="background-color: #AA0160; color: white; text-align: center; padding: 16px; font-size: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
                         Vacatures
                     </a>
                     <a href="{{ route('profile.edit') }}" class="w-full sm:w-48 lg:w-48" style="background-color: #AA0160; color: white; text-align: center; padding: 16px; font-size: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
@@ -29,7 +29,7 @@
                 {{-- WERKNEMER --}}
             @elseif(auth()->user()->role === 'werknemer')
                 <div class="flex flex-wrap justify-center gap-4">
-                    <a href="{{ route('vacancy.index') }}" class="w-full sm:w-48 lg:w-48" style="background-color: #AA0160; color: white; text-align: center; padding: 16px; font-size: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
+                    <a href="{{ route('vacancies.employee') }}" class="w-full sm:w-48 lg:w-48" style="background-color: #AA0160; color: white; text-align: center; padding: 16px; font-size: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
                         Vacatures
                     </a>
                     <a href="{{ route('dashboard') }}" class="w-full sm:w-48 lg:w-48" style="background-color: #AA0160; color: white; text-align: center; padding: 16px; font-size: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">

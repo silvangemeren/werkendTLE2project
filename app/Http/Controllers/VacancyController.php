@@ -101,9 +101,9 @@ class VacancyController extends Controller
             'postcode' => 'required|string|max:20',
             'land' => 'required|string|max:255',
             'function' => 'required|string|max:255',
-            'work_hours' => 'required|integer|min:1',
+            'work_hours' => 'required|string|min:1',
             'imageUrl' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
-            'salary' => 'required|integer|min:0',
+            'salary' => 'required|string|min:0',
         ]);
 
         $imagePath = $request->file('imageUrl')->store('images', 'public');
@@ -166,9 +166,9 @@ class VacancyController extends Controller
             'postcode' => 'required|string|max:20',
             'land' => 'required|string|max:255',
             'function' => 'required|string|max:255',
-            'work_hours' => 'required|integer|min:1',
+            'work_hours' => 'required|string|min:1',
             'imageUrl' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
-            'salary' => 'required|integer|min:0',
+            'salary' => 'required|string|min:0',
         ]);
 
         if ($request->hasFile('imageUrl')) {
