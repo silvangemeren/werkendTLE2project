@@ -16,7 +16,7 @@
 
         <!-- Vacancies List -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            @forelse( $searchedVacancies ?? $vacancies as $vacancy)
+            @forelse($searchedVacancies ?? $vacancies as $vacancy)
                 <div class="block">
                     <!-- Vacancy Card -->
                     <div class="bg-white rounded-lg shadow-md p-6">
@@ -32,7 +32,6 @@
                             <p class="text-gray-500 mt-2">{{ $vacancy->function }}</p>
                             <p class="text-gray-500 mt-2">{{ $vacancy->salary }}</p>
                             <p class="text-gray-500 mt-2"><strong>{{ $vacancy->status }}</strong></p>
-
                         </div>
 
                         <!-- View Vacancy Button -->
@@ -41,6 +40,24 @@
                                 Bekijk Vacature
                             </a>
                         </div>
+
+                        <!-- Apply Button -->
+                        <div class="mt-4">
+                            @if(in_array($vacancy->id, $appliedVacancyIds))
+                                <a class="block text-center bg-gray-500 text-white text-sm px-4 py-2 rounded-lg shadow mb-4 cursor-not-allowed" aria-disabled="true">
+                                    Al Gesolliciteerd
+                                </a>
+                            @else
+                                <a href="{{ route('vacancy.apply', ['vacancy' => $vacancy->id]) }}"
+                                   class="block text-center bg-black hover:bg-green-800 text-white text-sm px-4 py-2 rounded-lg shadow mb-4"
+                                   onclick="event.preventDefault(); document.getElementById('apply-form-{{ $vacancy->id }}').submit();">
+                                    Solliciteren
+                                </a>
+                                <form id="apply-form-{{ $vacancy->id }}" action="{{ route('vacancy.apply', ['vacancy' => $vacancy->id]) }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            @endif
+                        </div>
                     </div>
                 </div>
             @empty
@@ -48,5 +65,4 @@
             @endforelse
         </div>
     </div>
-
 </x-app-layout>
