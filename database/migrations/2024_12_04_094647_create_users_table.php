@@ -32,7 +32,7 @@ return new class extends Migration
             $table->enum('role', ['werknemer', 'werkgever', 'admin'])->default('werknemer')->nullable();
 
             $table->unsignedBigInteger('company_id')->nullable();
-            //$table->foreign('company_id')->references('id')->on('companies')->onDelete('set null');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('set null');
         });
     }
 
