@@ -247,7 +247,7 @@ public function guestSearch(Request $request){
             ->first();
 
         if ($existingApplication) {
-            return redirect()->route('vacancies.employee')->with('error', 'Je hebt al gesolliciteerd op deze vacature.');
+            return redirect()->route('vacancy.show', ['vacancy' => $vacancy->id])->with('success', 'Je hebt succesvol gesolliciteerd!');
         }
 
         // Create a new application
@@ -258,8 +258,7 @@ public function guestSearch(Request $request){
             'applied_at' => now(),
         ]);
 
-        return redirect()->route('vacancies.employee')->with('success', 'Je hebt succesvol gesolliciteerd!');
-    }
+        return redirect()->route('vacancy.show', ['vacancy' => $vacancy->id])->with('success', 'Je hebt succesvol gesolliciteerd!');    }
 
 
     /**
