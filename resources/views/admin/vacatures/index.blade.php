@@ -10,14 +10,9 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h3 class="mb-6 text-2xl font-semibold">Vacatures List</h3>
-
-                    <div class="mb-6">
-                        <a href="{{ route('admin.vacatures.create') }}"
-                           class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                            + Add New Vacature
-                        </a>
-                    </div>
-
+                    <a href="{{ route('change_status') }}" class="block p-2 bg-blue-300 text-white rounded-lg shadow hover:bg-blue-600">
+                        Status
+                    </a>
                     <!-- Table view for larger screens -->
                     <div class="hidden md:block">
                         <table class="w-full border-collapse">
@@ -47,7 +42,7 @@
                                     <td class="px-4 py-3 text-sm">{{ $vacature->salary }}</td>
                                     <td class="px-4 py-3 text-sm">{{ $vacature->status }}</td>
                                     <td class="px-4 py-3 text-sm">
-                                        <img src="{{ $vacature->imageUrl }}" alt="Vacature Image" class="h-16 w-16 object-cover rounded">
+                                        <img src="{{ $vacature->imageUrl ? asset('/storage/' . $vacature->imageUrl) : 'https://via.placeholder.com/150' }}" alt="Vacature Image" class="h-16 w-16 object-cover rounded">
                                     </td>
                                     <td class="px-4 py-3 text-sm space-x-2">
                                         <a href="{{ route('admin.vacatures.edit', $vacature) }}"

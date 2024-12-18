@@ -1,4 +1,4 @@
-<x-app-layout-2>
+<x-app-layout>
     <x-slot name="slot">
         <div class="flex flex-col justify-center items-center w-full flex-1 space-y-8">
             <div>
@@ -12,7 +12,7 @@
 
             <!-- Employee Box -->
             <div class="w-full max-w-md bg-white rounded-lg shadow-lg p-6 space-y-4">
-                <img src="{{ asset('images/employee.png') }}" alt="Employee" class="w-full object-contain">
+                <img src="images/Business-Strength-2310-001.jpg" alt="Employee">
                 <p class="text-lg text-gray-700 text-center font-medium">
                     "Ben je op zoek naar werk, maar loop je tegen obstakels aan zoals diploma’s of sollicitatiegesprekken? Open Hiring geeft iedereen een eerlijke kans om direct aan de slag te gaan. Meld je aan en laat je talent spreken!"
                 </p>
@@ -35,7 +35,7 @@
 
             <!-- Employer Box -->
             <div class="w-full max-w-md bg-white rounded-lg shadow-lg p-6 space-y-4">
-                <img src="{{ asset('images/employer.png') }}" alt="Employer" class="w-full object-contain">
+                <img src="images/Professional-Yellow-Careers-1.webp" alt="Employee">
                 <p class="text-lg text-gray-700 text-center font-medium">
                     "Vind en ontwikkel gemotiveerd talent zonder sollicitatieprocedures of vooroordelen. Open Hiring biedt een eenvoudige en eerlijke manier om vacatures te vervullen en diversiteit op de werkvloer te vergroten.
                     Geef mensen een kans gebaseerd op wat ze kunnen bijdragen, niet op hun verleden."
@@ -58,4 +58,4 @@
             </div>
         </div>
     </x-slot>
-</x-app-layout-2>
+</x-app-layout>

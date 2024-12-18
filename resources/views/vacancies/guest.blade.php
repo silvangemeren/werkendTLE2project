@@ -8,7 +8,7 @@
         </div>
 
         <div class="flex items-center justify-between mb-4">
-            <form action="{{ route('vacancy.search') }}" method="GET">
+            <form action="{{ route('vacancies.guestSearch') }}" method="GET">
                 <input type="text" name="vacancy" placeholder="Zoek" class="p-2 border rounded">
                 <x-primary-button type="submit">Zoeken</x-primary-button>
             </form>
@@ -16,7 +16,7 @@
 
         <!-- Vacancies List -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            @forelse($searchedVacancies ?? $employeeVacancies as $vacancy)
+            @forelse($searchedGuestVacancies ?? $vacancies as $vacancy)
                 <div class="block">
                     <!-- Vacancy Card -->
                     <div class="bg-white rounded-lg shadow-md p-6">
@@ -43,20 +43,9 @@
 
                         <!-- Apply Button -->
                         <div class="mt-4">
-                            @if(in_array($vacancy->id, $appliedVacancyIds))
-                                <a class="block text-center bg-gray-500 text-white text-sm px-4 py-2 rounded-lg shadow mb-4 cursor-not-allowed" aria-disabled="true">
-                                    Al Gesolliciteerd
-                                </a>
-                            @else
-                                <a href="{{ route('vacancy.apply', ['vacancy' => $vacancy->id]) }}"
-                                   class="block text-center bg-black hover:bg-green-800 text-white text-sm px-4 py-2 rounded-lg shadow mb-4"
-                                   onclick="event.preventDefault(); document.getElementById('apply-form-{{ $vacancy->id }}').submit();">
+                                <a href="{{ route('register.employee') }}" class="block text-center bg-black hover:bg-green-800 text-white text-sm px-4 py-2 rounded-lg shadow mb-4">
                                     Solliciteren
                                 </a>
-                                <form id="apply-form-{{ $vacancy->id }}" action="{{ route('vacancy.apply', ['vacancy' => $vacancy->id]) }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                            @endif
                         </div>
                     </div>
                 </div>
