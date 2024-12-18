@@ -29,7 +29,7 @@
                     <div class="mb-6">
                         <p class="text-sm text-gray-700 mb-2 truncate">{{ Str::limit($vacancy->description, 150) }}</p>
                         <div class="flex justify-between text-sm text-gray-600 mb-4">
-                            <span><strong>Salaris:</strong> {{ $vacancy->salary }} per uur</span>
+                            <span><strong>Salaris:</strong> {{ $vacancy->salary }}</span>
                             <span><strong>Locatie:</strong>
                                 @php
                                     // Extract city from location string

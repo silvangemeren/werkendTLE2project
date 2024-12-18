@@ -57,7 +57,7 @@
             </x-nav-link>
             <x-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')"
                         class="text-[#FAEC02] text-lg font-extrabold">
-                {{ __('Profile') }}
+                {{ __('Profiel') }}
             </x-nav-link>
         </div>
 
