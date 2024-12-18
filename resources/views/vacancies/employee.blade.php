@@ -18,13 +18,15 @@
         </div>
 
         <!-- Vacancies List -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            @forelse($searchedVacancies ?? $vacancies as $vacancy)
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <!-- Vacancy Image -->
-                    <div class="w-full h-48 bg-gray-200 mb-4 rounded-md">
-                        <img src="{{ $vacancy->imageUrl ? asset('/storage/' . $vacancy->imageUrl) : 'https://via.placeholder.com/150' }}" alt="Vacature Afbeelding" class="object-cover w-full h-full rounded-md">
-                    </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            @forelse($searchedVacancies ?? $employeeVacancies as $vacancy)
+                <div class="block">
+                    <!-- Vacancy Card -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <!-- Vacancy Image -->
+                        <div class="w-full h-64 bg-gray-200 mb-4">
+                            <img src="{{ $vacancy->imageUrl ? asset('/storage/' . $vacancy->imageUrl) : 'https://via.placeholder.com/150' }}" alt="Vacature Afbeelding" class="object-cover w-full h-full rounded-lg">
+                        </div>
 
                     <!-- Vacancy Title and Info -->
                     <h2 class="text-2xl font-bold text-[#2E342A] mb-2 break-words">{{ $vacancy->title }}</h2>
