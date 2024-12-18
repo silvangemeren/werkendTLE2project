@@ -49,7 +49,7 @@
 
                 {{-- WERKNEMER --}}
             @elseif(auth()->user()->role === 'werknemer')
-                <a href="{{ route('vacancy.index') }}" class="flex flex-col items-center justify-center gap-1"
+                <a href="{{ route('vacancies.employee') }}" class="flex flex-col items-center justify-center gap-1"
                    style="background-color: #AA0160; color: white; padding: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
                     <div class="w-10 h-10">
                         <img src="{{ asset('images/Icons/Vacancy.svg') }}" alt="Vacatures Icon" class="w-full h-full">
