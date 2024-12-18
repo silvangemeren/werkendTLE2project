@@ -247,7 +247,7 @@ public function guestSearch(Request $request){
             ->first();
 
         if ($existingApplication) {
-            return redirect()->route('vacancy.show', ['vacancy' => $vacancy->id])->with('success', 'Je hebt succesvol gesolliciteerd!');
+            return redirect()->route('vacancy.show', ['vacancy' => $vacancy->id])->with('success', 'Je hebt succesvol gesolliciteerd! Zie uw inbox voor een overzicht van uw sollicitaties.');
         }
 
         // Create a new application
