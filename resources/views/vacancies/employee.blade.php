@@ -16,7 +16,7 @@
 
         <!-- Vacancies List -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            @forelse($searchedVacancies ?? $vacancies as $vacancy)
+            @forelse($searchedVacancies ?? $employeeVacancies as $vacancy)
                 <div class="block">
                     <!-- Vacancy Card -->
                     <div class="bg-white rounded-lg shadow-md p-6">

@@ -17,16 +17,27 @@ class VacancyController extends Controller
         $search = $validatedData['vacancy'];
 
         if ($search) {
-            $searchedVacancies = Vacancy::where('title', 'LIKE', "%{$search}%")
-                ->orWhere('description', 'LIKE', "%{$search}%")
-                ->orWhere('function', 'LIKE', "%{$search}%")
-                ->where('status', 'available')
+            $searchedVacancies = Vacancy::where(function ($query) use ($search) {
+                $query->where('title', 'LIKE', "%{$search}%")
+                    ->orWhere('description', 'LIKE', "%{$search}%")
+                    ->orWhere('function', 'LIKE', "%{$search}%");
+            })
+                ->where('status', '=', 'available')
                 ->get();
+
         } else {
-            $searchedVacancies = Vacancy::all();
+            $searchedVacancies = Vacancy::where('status', '=', 'available')->get();
         }
 
-        return view('vacancies.employee', compact('searchedVacancies'))->with('userRole', auth()->user()->role);    }
+        $userId = auth()->id(); // Get the logged-in user's ID
+
+        // Get the list of vacancy IDs the user has already applied for
+        $appliedVacancyIds = \DB::table('applications')
+            ->where('user_id', $userId)
+            ->pluck('vacancy_id')
+            ->toArray();
+
+        return view('vacancies.employee', compact('searchedVacancies', 'appliedVacancyIds'))->with('userRole', auth()->user()->role);    }
 
 public function guestSearch(Request $request){
     $validatedData = $request->validate([
@@ -36,13 +47,15 @@ public function guestSearch(Request $request){
     $guestSearch = $validatedData['vacancy'];
 
     if ($guestSearch) {
-        $searchedGuestVacancies = Vacancy::where('title', 'LIKE', "%{$guestSearch}%")
-            ->orWhere('description', 'LIKE', "%{$guestSearch}%")
-            ->orWhere('function', 'LIKE', "%{$guestSearch}%")
-            ->where('status', 'available')
+        $searchedGuestVacancies = Vacancy::where(function ($query) use ($guestSearch) {
+            $query->where('title', 'LIKE', "%{$guestSearch}%")
+                ->orWhere('description', 'LIKE', "%{$guestSearch}%")
+                ->orWhere('function', 'LIKE', "%{$guestSearch}%");
+        })
+            ->where('status', '=', 'available')
             ->get();
     } else {
-        $searchedGuestVacancies = Vacancy::all();
+        $searchedGuestVacancies = Vacancy::where('status', '=', 'available')->get();
     }
 
     return view('vacancies.guest', compact('searchedGuestVacancies'));
@@ -87,7 +100,7 @@ public function guestSearch(Request $request){
         $userId = auth()->id(); // Get the logged-in user's ID
 
         // Fetch available vacancies
-        $vacancies = Vacancy::where('status', 'available')->get();
+        $employeeVacancies = Vacancy::where('status', '=', 'available')->get();
 
         // Get the list of vacancy IDs the user has already applied for
         $appliedVacancyIds = \DB::table('applications')
@@ -95,7 +108,7 @@ public function guestSearch(Request $request){
             ->pluck('vacancy_id')
             ->toArray();
 
-        return view('vacancies.employee', compact('vacancies', 'appliedVacancyIds'))->with('userRole', auth()->user()->role);
+        return view('vacancies.employee', compact('employeeVacancies', 'appliedVacancyIds'))->with('userRole', auth()->user()->role);
     }
 
     public function indexForGuest(){
