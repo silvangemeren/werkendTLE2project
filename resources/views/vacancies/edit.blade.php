@@ -1,6 +1,7 @@
-<x-edit-page-layout>
+<x-app-layout>
     <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Vacature Bewerken</h1>
 
+    <!-- Update Form -->
     <form action="{{ route('vacancy.update', ['id' => $vacancy->id]) }}" method="post" enctype="multipart/form-data" class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
         @csrf
         @method('PUT')
@@ -65,7 +66,7 @@
             <input type="file" name="imageUrl" id="imageUrl" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-pink-300 file:rounded-md file:bg-pink-100 file:text-white-700 hover:file:bg-green-200"/>
         </div>
 
-        <!-- Buttons -->
+        <!-- Save Button -->
         <div class="flex justify-between mt-8">
             <x-primary-button type="submit" class="w-full sm:w-auto bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-md">
                 Opslaan
@@ -73,19 +74,19 @@
         </div>
     </form>
 
-    <form action="{{ route('vacancy.destroy', ['id' => $vacancy->id]) }}" method="post">
-        <div class="flex justify-between mt-8">
+    <!-- Delete Form -->
+    <form action="{{ route('vacancy.destroy', ['id' => $vacancy->id]) }}" method="post" class="max-w-4xl mx-auto mt-4">
         @csrf
         @method('DELETE')
-            <x-primary-button type="submit" class="w-full sm:w-auto bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-md">
+        <x-primary-button type="submit" class="w-full sm:w-auto bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-md">
             Verwijderen
-            </x-primary-button>
-        </div>
+        </x-primary-button>
     </form>
+
     <!-- Back Button -->
-    <div class="mt-6">
+    <div class="mt-6 text-center">
         <button onclick="history.back()" class="text-white bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded-md">
             Terug
         </button>
     </div>
-</x-edit-page-layout>
+</x-app-layout>
