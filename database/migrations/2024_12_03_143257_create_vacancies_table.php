@@ -20,7 +20,7 @@ return new class extends Migration
             $table-> integer("work-hours");
             $table->integer("salary");
             $table->enum('status', ['available', 'closed', 'pending'])->default('available');
-            $table->unsignedBigInteger('employer_id');
+            $table->unsignedBigInteger('employer_id')->nullable();
             $table->foreign('employer_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
