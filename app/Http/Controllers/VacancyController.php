@@ -140,6 +140,7 @@ public function guestSearch(Request $request){
             'work_hours' => 'required|string|min:1',
             'imageUrl' => 'required|file|mimes:jpeg,png,jpg,gif|max:4048',
             'salary' => 'required|string|min:0',
+            'employer_id' => 'nullable'
         ]);
 
         $imagePath = $request->file('imageUrl')->store('images', 'public');
@@ -160,7 +161,7 @@ public function guestSearch(Request $request){
             'salary' => $validated['salary'],
             'status' => 'pending',
             'imageUrl' => $imagePath,
-            'employer_id' => auth()->id(),
+            'employer_id' => isset($validated['employer_id']) ? $validated['employer_id'] : (auth()->check() ? auth()->id() : null),
         ]);
 
         return redirect()->route('vacancies.employer')->with('success', 'Vacature succesvol aangemaakt.');
