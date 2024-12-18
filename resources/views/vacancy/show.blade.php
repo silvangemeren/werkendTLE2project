@@ -14,6 +14,17 @@
             <!-- Title -->
             <h1 class="text-2xl font-bold text-gray-800 mb-2">{{ $vacancy->title }}</h1>
 
+            @if(isset($queuePosition))
+                <div class="mt-4 text-sm text-gray-700">
+                    Je hebt {{ $queuePosition }} sollicitanten voor je in de wachtrij.
+                </div>
+            @else
+                <div class="mt-4 text-sm text-gray-500">
+                    Je hebt nog niet gesolliciteerd voor deze vacature.
+                </div>
+            @endif
+
+
             <!-- Description -->
             <p class="text-gray-600 mb-4">{{ $vacancy->description }}</p>
 
