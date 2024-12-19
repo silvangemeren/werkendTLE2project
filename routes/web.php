@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Admincontroller;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminVacaturesController;
@@ -83,6 +84,8 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('/admin/{id}/status', [AdminUserController::class, 'status'])->name('status');
 });
 
+Route::get('/inbox', [ApplicationController::class, 'inbox'])->name('inbox')->middleware('auth');
+Route::post('/inbox/unapply/{id}', [ApplicationController::class, 'unapply'])->name('application.unapply')->middleware('auth');
 
 
 // Miscellaneous Routes
