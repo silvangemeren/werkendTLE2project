@@ -1,20 +1,17 @@
 <x-app-layout>
     <x-slot name="slot">
-        <div class="flex flex-col justify-center items-center w-full flex-1 space-y-8">
-            <div>
-                <h1 class="text-4xl text-gray-700 text-center font-bold">
-                    Welkom bij Open Hiring, waar kansen centraal staan.
-                </h1>
-                <p class="text-lg text-gray-700 text-center font-medium">
-                    Open Hiring is een unieke en eerlijke manier van werven. Bij ons draait het niet om CV’s, interviews of achtergrondchecks, maar om jouw wil en vermogen om te werken. Of je nu een werkgever bent die diversiteit en eenvoud in het wervingsproces zoekt, of een werkzoekende die op zoek is naar een echte kans, Open Hiring brengt mensen en bedrijven samen zonder barrières.
-                </p>
-            </div>
 
+        <div class="w-full flex justify-center sm:hidden pt-5">
+            <img src="{{ asset('images/logo-oh.png') }}" alt="Mobile Logo" class="h-24">
+        </div>
+
+        <div class="flex flex-col lg:flex-row lg:space-x-8 justify-center items-stretch w-full flex-1 space-y-8 lg:space-y-0 p-5">
             <!-- Employee Box -->
-            <div class="w-full max-w-md bg-white rounded-lg shadow-lg p-6 space-y-4">
-                <img src="images/Business-Strength-2310-001.jpg" alt="Employee">
-                <p class="text-lg text-gray-700 text-center font-medium">
-                    "Ben je op zoek naar werk, maar loop je tegen obstakels aan zoals diploma’s of sollicitatiegesprekken? Open Hiring geeft iedereen een eerlijke kans om direct aan de slag te gaan. Meld je aan en laat je talent spreken!"
+            <div class="w-full max-w-md bg-[#E4ECCC] rounded-lg shadow-lg p-6 flex flex-col justify-between h-[450px]">
+                <h2 class="text-[#AA0160] font-bold">Werknemer</h2>
+                <img src="images/Business-Strength-2310-001.jpg" alt="Employee" class="w-full h-36 object-cover rounded">
+                <p class="text-lg text-black font-bold">
+                    “Zonder sollicitatiegespek is het makkelijker om aan het werk te gaan. Het is leuk, iedereen is aardig. Ik heb het hier naar mijn zin.”
                 </p>
                 <a href="{{ route('register.employee') }}"
                    class="w-full max-w-md"
@@ -25,20 +22,20 @@
                        padding: 16px;
                        font-size: 16px;
                        font-weight: bold;
-                       border-radius: 8px;
+                       border-radius: 25px;
                        box-shadow: 0 4px 1px #7C1A51;
                        display: block;
                    ">
-                    Werknemer
+                    Vind de baan voor jou
                 </a>
             </div>
 
             <!-- Employer Box -->
-            <div class="w-full max-w-md bg-white rounded-lg shadow-lg p-6 space-y-4">
-                <img src="images/Professional-Yellow-Careers-1.webp" alt="Employee">
-                <p class="text-lg text-gray-700 text-center font-medium">
-                    "Vind en ontwikkel gemotiveerd talent zonder sollicitatieprocedures of vooroordelen. Open Hiring biedt een eenvoudige en eerlijke manier om vacatures te vervullen en diversiteit op de werkvloer te vergroten.
-                    Geef mensen een kans gebaseerd op wat ze kunnen bijdragen, niet op hun verleden."
+            <div class="w-full max-w-md bg-[#E4ECCC] rounded-lg shadow-lg p-6 flex flex-col justify-between h-[450px]">
+                <h2 class="text-[#AA0160] font-bold">Werkgever</h2>
+                <img src="images/Professional-Yellow-Careers-1.webp" alt="Employer" class="w-full h-36 object-cover rounded">
+                <p class="text-lg text-black font-bold">
+                    “Je moet je vooroordelen en aannames kunnen loslaten, maar dan zul je vaak verrast worden door de kwaliteit en de persoon zelf.”
                 </p>
                 <a href="{{ route('register.employer') }}"
                    class="w-full max-w-md"
@@ -49,13 +46,50 @@
                        padding: 16px;
                        font-size: 2xl;
                        font-weight: bold;
-                       border-radius: 8px;
+                       border-radius: 25px;
                        box-shadow: 0 4px 1px #7C1A51;
                        display: block;
                    ">
-                    Werkgever
+                    Plaats jouw vacature
                 </a>
             </div>
         </div>
+
+        <!-- Principles Section -->
+        <div class="w-full bg-gray-100 py-12">
+            <h1 class="text-center text-3xl font-bold mb-10">
+                Waar gelooft Open Hiring in?
+            </h1>
+
+            <div class="flex flex-col md:flex-row justify-center items-stretch md:space-x-8 space-y-6 md:space-y-0 px-5">
+                <!-- First Principle -->
+                <div class="flex flex-col items-center space-y-4 p-6 w-full max-w-sm h-[350px]">
+                    <div class="text-[#92AA83] text-9xl font-extrabold">1</div>
+                    <h2 class="text-center font-bold text-100">Het werkt beter zonder (voor)oordelen</h2>
+                    <p class="text-center text-lg text-black font-medium">
+                        Met Open Hiring krijgen (voor)oordelen geen kans. En mensen die vaak (onbewust) worden uitgesloten juist wel. Dat maakt de arbeidsmarkt eerlijker en mooier.
+                    </p>
+                </div>
+
+                <!-- Second Principle -->
+                <div class="flex flex-col items-center space-y-4 p-6 w-full max-w-sm h-[350px]">
+                    <div class="text-[#92AA83] text-9xl font-extrabold">2</div>
+                    <h2 class="text-center font-bold text-100">We vertrouwen elkaar</h2>
+                    <p class="text-center text-lg text-black font-medium">
+                        Transparantie in het werkproces. Geen barrières voor werk, zoals diploma’s of gesprekken.
+                    </p>
+                </div>
+
+                <!-- Third Principle -->
+                <div class="flex flex-col items-center space-y-4 p-6 w-full max-w-sm h-[350px]">
+                    <div class="text-[#92AA83] text-9xl font-extrabold">3</div>
+                    <h2 class="text-center font-bold text-100">Groeien doe je samen</h2>
+                    <p class="text-center text-lg text-black font-medium">
+                        Vertrouwen in mensen. Het potentieel van motivatie en verantwoordelijkheidsgevoel staat centraal.
+                    </p>
+                </div>
+            </div>
+        </div>
+
     </x-slot>
 </x-app-layout>
