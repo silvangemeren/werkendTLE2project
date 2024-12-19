@@ -11,6 +11,12 @@ class Vacancy extends Model
 
     protected $table = 'vacancies';
 
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
+
+
     protected $fillable = ['title', 'description','location', 'function', 'work_hours', 'salary', 'status', 'employer_id','imageUrl'];
 
     public function employer()
@@ -18,10 +24,5 @@ class Vacancy extends Model
         return $this->belongsTo(User::class, 'employer_id');
     }
 
-
-    public function applications()
-    {
-        return $this->hasMany(Application::class, 'vacancy_id');
-    }
 
 }

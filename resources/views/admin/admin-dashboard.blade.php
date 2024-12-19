@@ -1,5 +1,3 @@
-@include('layouts.navigation')
-
 <x-app-layout>
     <div class="py-12"> <!-- Page background is white -->
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
