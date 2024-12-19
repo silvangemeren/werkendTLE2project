@@ -56,7 +56,7 @@
                     </div>
                     <span class="text-sm">Vacatures</span>
                 </a>
-                <a href="{{ route('dashboard') }}" class="flex flex-col items-center justify-center gap-1"
+                <a href="{{ route('inbox') }}" class="flex flex-col items-center justify-center gap-1"
                    style="background-color: #AA0160; color: white; padding: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
                     <div class="w-10 h-10">
                         <img src="{{ asset('images/Icons/Inbox.svg') }}" alt="Inbox Icon" class="w-full h-full">
