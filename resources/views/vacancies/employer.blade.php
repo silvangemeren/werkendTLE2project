@@ -27,28 +27,45 @@
                         <!-- Vacancy Image -->
                         <div class="w-full h-64 bg-gray-200 mb-4">
                             <img src="{{ asset('/storage/' . $vacancy->imageUrl) }}" alt="Vacature Afbeelding" class="object-cover w-full h-full rounded-lg">
-                        </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <!-- Vacancy Image -->
+                    <div class="w-full h-48 bg-gray-200 mb-4 rounded-md">
+                        <img src="{{ asset('/storage/' . $vacancy->imageUrl) }}" alt="Vacature Afbeelding" class="object-cover w-full h-full rounded-md">
+                    </div>
 
-                        <!-- Vacancy Details -->
-                        <div>
-                            <h2 class="text-xl font-semibold text-gray-800">{{ $vacancy->title }}</h2>
-                            <p class="text-gray-500 mt-2">{{ $vacancy->description }}</p>
-                            <p class="text-gray-500 mt-2">{{ $vacancy->function }}</p>
-                            <p class="text-gray-500 mt-2">Salaris: €{{ number_format($vacancy->salary, 2) }}</p>
-                        </div>
+                    <!-- Vacancy Title and Info -->
+                    <h2 class="text-2xl font-bold text-[#2E342A] mb-2">{{ $vacancy->title }}</h2>
+                    <p class="text-sm text-gray-600 mb-4">{{ $vacancy->function }}</p>
 
-                        <!-- Manage Buttons -->
-                        <div class="mt-4">
-                            <a href="{{ route('vacancy.show', $vacancy->id) }}" class="block text-center bg-pink-500 hover:bg-pink-600 text-white text-sm px-4 py-2 rounded-lg shadow mb-4">
-                                Bekijk Vacature
-                            </a>
-                            <a href="{{ route('vacancy.edit', $vacancy->id) }}" class="block text-center bg-pink-500 hover:bg-pink-600 text-white text-sm px-4 py-2 rounded-lg shadow">
-                                Beheer
-                            </a>
+                    <!-- Vacancy Description, Salary, and Location -->
+                    <div class="mb-6">
+                        <p class="text-sm text-gray-700 mb-2 truncate">{{ Str::limit($vacancy->description, 150) }}</p>
+                        <div class="flex justify-between text-sm text-gray-600 mb-4">
+                            <span><strong>Salaris:</strong> {{ $vacancy->salary }}</span>
+                            <span><strong>Locatie:</strong>
+                                @php
+                                    // Extract city from location string
+                                    $locationParts = explode(',', $vacancy->location);
+                                    $city = trim($locationParts[1] ?? ''); // Default to empty if no city
+                                @endphp
+                                {{ $city }}
+                            </span>
                         </div>
+                    </div>
+
+                    <!-- Vacancy Info and Manage Buttons -->
+                    <div class="flex justify-between flex-col">
+                        <a href="{{ route('vacancy.show', $vacancy->id) }}" class="text-center bg-[#AA0160] hover:bg-[#8C004E] text-white text-sm px-6 py-3 rounded-md shadow-md mb-4">
+                            Bekijk Vacature
+                        </a>
+
+                        <a href="{{ route('vacancy.edit', $vacancy->id) }}" class="text-center bg-[#AA0160] hover:bg-[#8C004E] text-white text-sm px-6 py-3 rounded-md shadow-md">
+                            Beheer
+                        </a>
                     </div>
                 </div>
             @endforeach
         </div>
     </div>
+
 </x-app-layout>

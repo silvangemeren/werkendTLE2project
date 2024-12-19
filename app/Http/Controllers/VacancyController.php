@@ -3,15 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vacancy;
-use App\Models\Application;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class VacancyController extends Controller
 {
-    /**
-     * Search for vacancies.
-     */
+
     public function search(Request $request)
     {
         $validatedData = $request->validate([
@@ -20,42 +16,94 @@ class VacancyController extends Controller
 
         $search = $validatedData['vacancy'];
 
-        $searchedVacancies = Vacancy::withCount('applications')
-            ->where('status', 'available')
-            ->when($search, function ($query) use ($search) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('title', 'LIKE', "%{$search}%")
-                        ->orWhere('description', 'LIKE', "%{$search}%")
-                        ->orWhere('function', 'LIKE', "%{$search}%");
-                });
+        if ($search) {
+            $searchedVacancies = Vacancy::where(function ($query) use ($search) {
+                $query->where('title', 'LIKE', "%{$search}%")
+                    ->orWhere('description', 'LIKE', "%{$search}%")
+                    ->orWhere('function', 'LIKE', "%{$search}%");
             })
-            ->get();
+                ->where('status', '=', 'available')
+                ->get();
 
-        return view('vacancies.employee', compact('searchedVacancies'))->with('userRole', Auth::user()->role);
+        } else {
+            $searchedVacancies = Vacancy::where('status', '=', 'available')->get();
+        }
+
+        $userId = auth()->id(); // Get the logged-in user's ID
+
+        // Get the list of vacancy IDs the user has already applied for
+        $appliedVacancyIds = \DB::table('applications')
+            ->where('user_id', $userId)
+            ->pluck('vacancy_id')
+            ->toArray();
+
+        return view('vacancies.employee', compact('searchedVacancies', 'appliedVacancyIds'))->with('userRole', auth()->user()->role);    }
+
+public function guestSearch(Request $request){
+    $validatedData = $request->validate([
+        'vacancy' => 'nullable|string|max:255',
+    ]);
+
+    $guestSearch = $validatedData['vacancy'];
+
+    if ($guestSearch) {
+        $searchedGuestVacancies = Vacancy::where(function ($query) use ($guestSearch) {
+            $query->where('title', 'LIKE', "%{$guestSearch}%")
+                ->orWhere('description', 'LIKE', "%{$guestSearch}%")
+                ->orWhere('function', 'LIKE', "%{$guestSearch}%");
+        })
+            ->where('status', '=', 'available')
+            ->get();
+    } else {
+        $searchedGuestVacancies = Vacancy::where('status', '=', 'available')->get();
     }
 
-    /**
-     * Index method to route users based on role.
-     */
+    return view('vacancies.guest', compact('searchedGuestVacancies'));
+}
+
     public function index()
     {
-        if (Auth::check() && Auth::user()->role == 'werkgever') {
-            return $this->indexForEmployer();
-        } elseif (Auth::check() && Auth::user()->role == 'werknemer') {
+        return redirect()->route('login'); // Example redirect to login
+
+    }
+    /**
+     * Display a listing of vacancies for the authenticated employer.
+     */
+    public function indexForEmployer()
+    {
+
+        if (auth()->check() && auth()->user()->role == 'werknemer') { // Explicitly check if user is logged in
             return $this->indexForEmployee();
         }
-        return redirect()->route('login');
+        if (auth()->check() && auth()->user()->role == 'admin') { // Explicitly check if user is logged in
+            return view('admin.admin-dashboard');
+        }
+
+        $employer_vacancies = Vacancy::where('employer_id', auth()->id())->get();
+
+        return view('vacancies.employer', compact('employer_vacancies'));
     }
 
+
     /**
-     * Display vacancies for employers.
+     * Display a listing of vacancies available for employees to apply for.
      */
     public function indexForEmployee()
     {
         $userId = Auth::id(); // Get the ID of the logged-in user
+        if (auth()->check() && auth()->user()->role == 'werkgever') { // Explicitly check if user is logged in
+            return $this->indexForEmployer();
+        }
+        if (auth()->check() && auth()->user()->role == 'admin') { // Explicitly check if user is logged in
+            return view('admin.admin-dashboard');
+        }
+
+        $userId = auth()->id(); // Get the logged-in user's ID
 
         // Fetch all available vacancies
         $vacancies = Vacancy::where('status', 'available')->get();
+        // Fetch available vacancies
+        $employeeVacancies = Vacancy::where('status', '=', 'available')->get();
 
         // Add application counts manually
         foreach ($vacancies as $vacancy) {
@@ -66,7 +114,11 @@ class VacancyController extends Controller
             ->pluck('vacancy_id')
             ->toArray();
 
-        return view('vacancies.employee', compact('vacancies', 'appliedVacancyIds'));
+        return view('vacancies.employee', compact('employeeVacancies', 'appliedVacancyIds'))->with('userRole', auth()->user()->role);
+    }
+
+    public function indexForGuest(){
+        return view('vacancies.guest');
     }
 
 
@@ -92,7 +144,7 @@ class VacancyController extends Controller
     }
 
     /**
-     * Store a newly created vacancy.
+     * Store a newly created vacancy in storage.
      */
     public function store(Request $request)
     {
@@ -104,15 +156,19 @@ class VacancyController extends Controller
             'postcode' => 'required|string|max:20',
             'land' => 'required|string|max:255',
             'function' => 'required|string|max:255',
-            'work_hours' => 'required|integer|min:1',
-            'imageUrl' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
-            'salary' => 'required|integer|min:0',
+            'work_hours' => 'required|string|min:1',
+            'imageUrl' => 'required|file|mimes:jpeg,png,jpg,gif|max:4048',
+            'salary' => 'required|string|min:0',
+            'employer_id' => 'nullable'
         ]);
 
         $imagePath = $request->file('imageUrl')->store('images', 'public');
 
         $location = implode(', ', array_filter([
-            $validated['adres'], $validated['stad'], $validated['postcode'], $validated['land'],
+            $validated['adres'],
+            $validated['stad'],
+            $validated['postcode'],
+            $validated['land'],
         ]));
 
         Vacancy::create([
@@ -122,9 +178,9 @@ class VacancyController extends Controller
             'function' => $validated['function'],
             'work_hours' => $validated['work_hours'],
             'salary' => $validated['salary'],
-            'status' => 'available',
+            'status' => 'pending',
             'imageUrl' => $imagePath,
-            'employer_id' => Auth::id(),
+            'employer_id' => isset($validated['employer_id']) ? $validated['employer_id'] : (auth()->check() ? auth()->id() : null),
         ]);
 
         return redirect()->route('vacancies.employer')->with('success', 'Vacature succesvol aangemaakt.');
@@ -192,15 +248,23 @@ class VacancyController extends Controller
     public function edit($id)
     {
         $vacancy = Vacancy::findOrFail($id);
-        if ($vacancy->employer_id !== Auth::id()) {
+
+        if ($vacancy->employer_id !== auth()->id()) {
             return redirect()->route('vacancies.employer');
         }
 
-        return view('vacancies.edit', compact('vacancy'));
+        $locationParts = explode(', ', $vacancy->location);
+
+        return view('vacancies.edit', compact('vacancy'))->with([
+            'adres' => $locationParts[0] ?? '',
+            'stad' => $locationParts[1] ?? '',
+            'postcode' => $locationParts[2] ?? '',
+            'land' => $locationParts[3] ?? '',
+        ]);
     }
 
     /**
-     * Update a vacancy.
+     * Update the specified vacancy in storage.
      */
     public function update(Request $request, $id)
     {
@@ -209,9 +273,14 @@ class VacancyController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'work_hours' => 'required|integer|min:1',
-            'salary' => 'required|integer|min:0',
+            'adres' => 'required|string|max:255',
+            'stad' => 'required|string|max:255',
+            'postcode' => 'required|string|max:20',
+            'land' => 'required|string|max:255',
+            'function' => 'required|string|max:255',
+            'work_hours' => 'required|string|min:1',
             'imageUrl' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
+            'salary' => 'required|string|min:0',
         ]);
 
         if ($request->hasFile('imageUrl')) {
@@ -219,23 +288,77 @@ class VacancyController extends Controller
             $vacancy->imageUrl = $imagePath;
         }
 
-        $vacancy->update($validated);
+        $location = implode(', ', array_filter([
+            $validated['adres'],
+            $validated['stad'],
+            $validated['postcode'],
+            $validated['land'],
+        ]));
+
+        $vacancy->update([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'location' => $location,
+            'function' => $validated['function'],
+            'work_hours' => $validated['work_hours'],
+            'salary' => $validated['salary'],
+            'status' => 'pending',
+        ]);
 
         return redirect()->route('vacancies.employer')->with('success', 'Vacature succesvol bijgewerkt.');
     }
 
     /**
-     * Delete a vacancy.
+     * Apply for a specific vacancy.
+     */
+    public function apply($id)
+    {
+        $vacancy = Vacancy::findOrFail($id);
+        $userId = auth()->id(); // Get the authenticated user's ID
+
+        // Check if the user has already applied to this vacancy
+        $existingApplication = \DB::table('applications')
+            ->where('user_id', $userId)
+            ->where('vacancy_id', $vacancy->id)
+            ->first();
+
+        if ($existingApplication) {
+            return redirect()->route('vacancy.show', ['vacancy' => $vacancy->id])->with('success', 'Je hebt succesvol gesolliciteerd!');
+        }
+
+        // Create a new application
+        \DB::table('applications')->insert([
+            'user_id' => $userId,
+            'vacancy_id' => $vacancy->id,
+            'status' => 'submitted',
+            'applied_at' => now(),
+        ]);
+
+        return redirect()->route('vacancy.show', ['vacancy' => $vacancy->id])->with('success', 'Je hebt succesvol gesolliciteerd! Zie uw inbox voor een overzicht van uw sollicitaties.');    }
+
+
+    /**
+     * Remove the specified vacancy from storage.
      */
     public function destroy($id)
     {
         $vacancy = Vacancy::findOrFail($id);
-        if ($vacancy->employer_id !== Auth::id()) {
+
+        if ($vacancy->employer_id !== auth()->id()) {
             return redirect()->route('vacancies.employer');
         }
+
 
         $vacancy->delete();
 
         return redirect()->route('vacancies.employer')->with('success', 'Vacature succesvol verwijderd.');
     }
+
+    public function show($id)
+    {
+        $vacancy = Vacancy::findOrFail($id);
+        return view('vacancy.show', compact('vacancy'));
+    }
 }
+
+

@@ -1,131 +1,218 @@
-<x-layout>
+<x-app-layout>
     @vite('resources/css/create-page.css')
 
-    <div class="max-w-4xl mx-auto bg-green-50 p-6 rounded-lg shadow-md">
-        <h1 class="text-2xl font-bold text-gray-800 mb-6">Vacature Beheren</h1>
+    <div class="flex justify-center items-center min-h-screen bg-gray-100">
+        <!-- Form Box -->
+        <div class="max-w-4xl w-full bg-[#92AA83] p-8 rounded-lg shadow-md">
+            <h1 class="text-3xl font-bold text-center text-[#2E342A] mb-8">Vacature Creëren</h1>
 
-        <form action="{{ route('vacancy.store') }}" method="post" enctype="multipart/form-data" class="space-y-6">
-            @csrf
-            <!-- Form Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Left Column -->
-                <div class="space-y-4">
-                    <div>
-                        <label for="title" class="block text-sm font-medium text-gray-700">Naam</label>
-                        <input
-                            type="text"
-                            name="title"
-                            id="title"
-                            required
-                            placeholder="bv. Albert Heijn"
-                            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
-                        />
+            <!-- Back to Vacatures Button -->
+            @auth
+                @if(auth()->user()->role === 'werknemer')
+                    <!-- Link for employees (werknemer) -->
+                    <a href="{{ route('vacancies.employee') }}" class="bg-[#AA0160] hover:bg-[#C21770] text-white font-bold px-4 py-2 rounded-lg shadow-md">
+                        ← Terug naar Vacatures
+                    </a>
+                @elseif(auth()->user()->role === 'werkgever')
+                    <!-- Link for employers (werkgever) -->
+                    <a href="{{ route('vacancies.employer') }}" class="bg-[#AA0160] hover:bg-[#C21770] text-white font-bold px-4 py-2 rounded-lg shadow-md">
+                        ← Terug naar Vacatures
+                    </a>
+                @endif
+            @endauth
+
+
+
+            <form action="{{ route('vacancy.store') }}" method="post" enctype="multipart/form-data" class="space-y-8">
+                @csrf
+
+                <!-- General Information -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Left Column -->
+                    <div class="space-y-6">
+                        <div>
+                            <label for="title" class="block text-base font-bold text-[#2E342A]">Titel</label>
+                            <input
+                                type="text"
+                                name="title"
+                                id="title"
+                                required
+                                placeholder="Bijv. Albert Heijn"
+                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#FAEC02] focus:border-[#FAEC02] bg-[#E2ECC8] text-[#2E342A]"
+                            />
+                        </div>
+                        <div>
+                            <label for="description" class="block text-base font-bold text-[#2E342A]">Omschrijving</label>
+                            <textarea
+                                name="description"
+                                id="description"
+                                placeholder="Omschrijf de vacature"
+                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#FAEC02] focus:border-[#FAEC02] bg-[#E2ECC8] text-[#2E342A] h-24 resize-none"
+                            ></textarea>
+                            <p class="mt-2 text-sm font-bold text-[#2E342A]">
+                                Klik <a href="#" id="more-info-link" class="text-blue-900 underline">hier</a> voor meer info.
+                            </p>
+                        </div>
+                        <div>
+                            <label for="adres" class="block text-base font-bold text-[#2E342A]">Locatie</label>
+                            <div class="grid grid-cols-2 gap-4 mt-2">
+                                <input
+                                    type="text"
+                                    name="adres"
+                                    id="adres"
+                                    required
+                                    placeholder="Adres"
+                                    class="block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#FAEC02] focus:border-[#FAEC02] bg-[#E2ECC8] text-[#2E342A]"
+                                />
+                                <input
+                                    type="text"
+                                    name="stad"
+                                    id="stad"
+                                    required
+                                    placeholder="Stad"
+                                    class="block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#FAEC02] focus:border-[#FAEC02] bg-[#E2ECC8] text-[#2E342A]"
+                                />
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 mt-4">
+                                <input
+                                    type="text"
+                                    name="postcode"
+                                    id="postcode"
+                                    required
+                                    placeholder="Postcode"
+                                    class="block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#FAEC02] focus:border-[#FAEC02] bg-[#E2ECC8] text-[#2E342A]"
+                                />
+                                <input
+                                    type="text"
+                                    name="land"
+                                    id="land"
+                                    required
+                                    placeholder="Land"
+                                    class="block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#FAEC02] focus:border-[#FAEC02] bg-[#E2ECC8] text-[#2E342A]"
+                                />
+                            </div>
+                        </div>
+                        <!-- Modal for extra info -->
+                        <div id="more-info-modal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+                            <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md sm:max-w-lg md:max-w-3xl">
+                                <h3 class="text-xl font-semibold text-[#2E342A] mb-4">Meer Informatie over de Omschrijving</h3>
+                                <p class="text-gray-600 mb-4">
+                                    In de "Omschrijving" kunnen de volgende details opgenomen worden:
+                                </p>
+
+                                <p class="text-gray-600 mb-4">
+                                    <strong>Handelingen:</strong> Specifieke taken of fysieke vereisten zoals:
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>Staan, zitten, of bewegen</li>
+                                    <li>Handmatig werk</li>
+                                </ul>
+                                </p>
+                                <br>
+                                <p class="text-gray-600 mb-4">
+                                    <strong>Vereisten:</strong> Benodigde certificaten of documenten:
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>Certificaten, rijbewijzen</li>
+                                    <li>Specifieke opleiding</li>
+                                </ul>
+                                </p>
+                                <br>
+                                <p class="text-gray-600 mb-4">
+                                    <strong>Rooster:</strong> Werkuren en flexibiliteit zoals:
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>Fulltime / Parttime</li>
+                                    <li>Flexibele uren, ploegendiensten</li>
+                                </ul>
+                                </p>
+
+                                <button id="close-modal" class="bg-[#AA0160] hover:bg-[#C21770] text-white px-6 py-2 rounded-md mt-4 block w-full sm:w-auto mx-auto sm:mx-0">
+                                    Sluiten
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <label for="description" class="block text-sm font-medium text-gray-700">Omschrijving</label>
-                        <input
-                            type="text"
-                            name="description"
-                            id="description"
-                            placeholder="Omschrijving"
-                            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
-                        />
-                    </div>
-                    <div>
-                        <label for="adres" class="block text-sm font-medium text-gray-700">Locatie</label>
-                        <div class="space-y-2">
+
+                    <!-- Right Column -->
+                    <div class="space-y-6">
+                        <div>
+                            <label for="function" class="block text-base font-bold text-[#2E342A]">Functie</label>
                             <input
                                 type="text"
-                                name="adres"
-                                id="adres"
+                                name="function"
+                                id="function"
                                 required
-                                class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
+                                placeholder="Bijv. Vakkenvuller"
+                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#FAEC02] focus:border-[#FAEC02] bg-[#E2ECC8] text-[#2E342A]"
                             />
+                        </div>
+                        <div>
+                            <label for="work_hours" class="block text-base font-bold text-[#2E342A]">Werkuren per week</label>
                             <input
                                 type="text"
-                                name="stad"
-                                id="stad"
+                                name="work_hours"
+                                id="work_hours"
                                 required
-                                placeholder="Stad"
-                                class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
+                                placeholder="Bijv. 24 uur/week"
+                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#FAEC02] focus:border-[#FAEC02] bg-[#E2ECC8] text-[#2E342A]"
                             />
+                        </div>
+                        <div>
+                            <label for="salary" class="block text-base font-bold text-[#2E342A]">Uurloon</label>
                             <input
                                 type="text"
-                                name="postcode"
-                                id="postcode"
+                                name="salary"
+                                id="salary"
                                 required
-                                placeholder="Postcode"
-                                class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
+                                placeholder="Bijv. 15 euro/uur"
+                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#FAEC02] focus:border-[#FAEC02] bg-[#E2ECC8] text-[#2E342A]"
                             />
+                        </div>
+                        <div>
+                            <label for="imageUrl" class="block text-base font-bold text-[#2E342A]">Afbeelding</label>
                             <input
-                                type="text"
-                                name="land"
-                                id="land"
+                                type="file"
+                                name="imageUrl"
+                                id="imageUrl"
                                 required
-                                placeholder="Land"
-                                class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
+                                class="mt-2 block w-full text-sm text-[#2E342A] file:mr-4 file:py-2 file:px-4 file:rounded-md file:bg-[#AA0160] file:text-white font-bold hover:file:bg-[#C21770]"
                             />
                         </div>
                     </div>
-                    <div>
-                        <label for="function" class="block text-sm font-medium text-gray-700">Functie</label>
-                        <input
-                            type="text"
-                            name="function"
-                            id="function"
-                            required
-                            placeholder="bv. Manager"
-                            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
-                        />
-                    </div>
                 </div>
 
-                <!-- Right Column -->
-                <div class="space-y-4">
-                    <div>
-                        <label for="work_hours" class="block text-sm font-medium text-gray-700">Werkuren</label>
-                        <input
-                            type="text"
-                            name="work_hours"
-                            id="work_hours"
-                            required
-                            placeholder="bv. 40"
-                            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
-                        />
-                    </div>
-                    <div>
-                        <label for="salary" class="block text-sm font-medium text-gray-700">Salaris</label>
-                        <input
-                            type="text"
-                            name="salary"
-                            id="salary"
-                            required
-                            placeholder="bv. 30.000"
-                            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
-                        />
-                    </div>
-                    <div>
-                        <label for="imageUrl" class="block text-sm font-medium text-gray-700">Afbeelding</label>
-                        <input
-                            type="file"
-                            name="imageUrl"
-                            id="imageUrl"
-                            required
-                            class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-pink-300 file:rounded-md file:bg-pink-100 file:text-white-700 hover:file:bg-green-200"
-                        />
-                    </div>
+                <!-- Submit Buttons -->
+                <div class="flex justify-end items-center space-x-4">
+                    <x-primary-button class="bg-[#AA0160] hover:bg-[#C21770] text-[#FAEC02] font-bold px-6 py-3 rounded-lg shadow-md">
+                        Preview
+                    </x-primary-button>
+                    <x-primary-button class="bg-[#AA0160] hover:bg-[#C21770] text-[#FAEC02] font-bold px-6 py-3 rounded-lg shadow-md">
+                        Creëren
+                    </x-primary-button>
                 </div>
-            </div>
-
-            <!-- Submit Button -->
-            <div class="text-right">
-                <x-primary-button class="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded-lg shadow">
-                    Preview
-                </x-primary-button>
-                <x-primary-button class="bg-pink-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg shadow ml-4">
-                    Creeëren
-                </x-primary-button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</x-layout>
+
+    <script>
+        // Show modal on "Klik hier voor meer" link click
+        const moreInfoLink = document.getElementById('more-info-link');
+        const modal = document.getElementById('more-info-modal');
+        const closeModalButton = document.getElementById('close-modal');
+
+        moreInfoLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            modal.classList.remove('hidden');
+        });
+
+        closeModalButton.addEventListener('click', function () {
+            modal.classList.add('hidden');
+        });
+
+        // Close the modal when clicking anywhere outside of the modal content
+        modal.addEventListener('click', function (e) {
+            // Close only if clicking on the backdrop (not the modal content)
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+            }
+        });
+    </script>
+</x-app-layout>

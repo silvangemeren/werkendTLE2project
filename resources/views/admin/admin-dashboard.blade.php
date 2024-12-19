@@ -1,35 +1,35 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Admin Dashboard') }}
-        </h2>
-    </x-slot>
+@include('layouts.navigation')
 
-    <div class="py-12">
+<x-app-layout>
+    <div class="py-12"> <!-- Page background is white -->
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("Welcome to the Admin Dashboard!") }}
+
+            <!-- Welcome Box -->
+            <div class="bg-[#92AA83] text-[#2E342A] overflow-hidden shadow-lg sm:rounded-lg mb-6">
+                <div class="p-6 text-center">
+                    <h3 class="text-3xl font-extrabold">Welkom bij het Admin Dashboard! </h3>
+                    <p class="mt-4 text-lg font-extrabold">Hier kun je gebruikers en vacatures beheren.</p>
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 text-gray-900 dark:text-gray-100 space-y-4">
-                <h3 class="font-semibold text-lg">Manage Sections</h3>
+            <!-- Manage Sections -->
+            <div class="bg-[#92AA83] p-6 rounded-lg text-[#2E342A] shadow-lg">
+                <h3 class="font-extrabold text-xl mb-4 flex justify-center">Beheer Secties</h3>
 
-                <!-- users overview link -->
-                <a href="{{ route('admin.users.index') }}" class="block p-4 bg-yellow-500 text-white rounded-lg shadow hover:bg-yellow-600">
-                    Users
-                </a>
+                <!-- Buttons in a row -->
+                <div class="flex flex-wrap gap-4">
+                    <!-- Users Overview Link -->
+                    <a href="{{ route('admin.users.index') }}"
+                       class="flex-1 p-6 bg-[#AA0160] text-white rounded-lg shadow-lg hover:bg-[#90004E] transition duration-300 font-extrabold text-center focus:ring-[#AA0160] focus:border-[#FAEC02]">
+                        Gebruikers Overzicht
+                    </a>
 
-                <!--  vacatures overview link -->
-                <a href="{{ route('admin.vacatures.index') }}" class="block p-4 bg-green-500 text-white rounded-lg shadow hover:bg-green-600">
-                    Vacancies
-                </a>
-
-                {{--                <!--  post overview link -->--}}
-                {{--                <a href="{{ route('admin.animals.index') }}" class="block p-4 bg-purple-500 text-white rounded-lg shadow hover:bg-purple-600">--}}
-                {{--                    Posts--}}
-                {{--                </a>--}}
+                    <!-- Vacancies Overview Link -->
+                    <a href="{{ route('admin.vacatures.index') }}"
+                       class="flex-1 p-6 bg-[#AA0160] text-white rounded-lg shadow-lg hover:bg-[#90004E] transition duration-300 font-extrabold text-center focus:ring-[#AA0160] focus:border-[#FAEC02]">
+                        Vacatures Overzicht
+                    </a>
+                </div>
             </div>
         </div>
     </div>

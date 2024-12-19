@@ -1,48 +1,83 @@
 <x-app-layout>
-    <div class="py-12">
-        <div class="dashboard flex flex-wrap justify-center items-center gap-4">
+    <div class="py-12 px-8">
+        <div class="dashboard grid grid-cols-2 justify-center items-center gap-4">
             {{-- WERKGEVER --}}
             @if(auth()->user()->role === 'werkgever')
                 <!-- WERKGEVER content -->
-                <div class="flex flex-wrap justify-center gap-4">
-                    <a href="{{ route('vacancy.index') }}" class="w-full sm:w-48 lg:w-48" style="background-color: #AA0160; color: white; text-align: center; padding: 16px; font-size: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
-                        Vacatures
-                    </a>
-                    <a href="{{ route('profile.edit') }}" class="w-full sm:w-48 lg:w-48" style="background-color: #AA0160; color: white; text-align: center; padding: 16px; font-size: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
-                        Profiel
-                    </a>
-                    <a href="{{ route('dashboard') }}" class="w-full sm:w-48 lg:w-48" style="background-color: #AA0160; color: white; text-align: center; padding: 16px; font-size: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
-                        Home
-                    </a>
-                    <a href="{{ route('dashboard') }}" class="w-full sm:w-48 lg:w-48" style="background-color: #AA0160; color: white; text-align: center; padding: 16px; font-size: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
-                        Inbox
-                    </a>
-                    <a href="{{ route('dashboard') }}" class="w-full sm:w-48 lg:w-48" style="background-color: #AA0160; color: white; text-align: center; padding: 16px; font-size: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
-                        Collega's
-                    </a>
-                    <a href="{{ route('dashboard') }}" class="w-full sm:w-48 lg:w-48" style="background-color: #AA0160; color: white; text-align: center; padding: 16px; font-size: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
-                        Instellingen
-                    </a>
-
-                </div>
+                <a href="{{ route('vacancies.employer') }}" class="flex flex-col items-center justify-center gap-1"
+                   style="background-color: #AA0160; color: white; padding: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
+                    <div class="w-10 h-10">
+                        <img src="{{ asset('images/Icons/Vacancy.svg') }}" alt="Vacatures Icon" class="w-full h-full">
+                    </div>
+                    <span class="text-sm">Vacatures</span>
+                </a>
+                <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center gap-1"
+                   style="background-color: #AA0160; color: white; padding: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
+                    <div class="w-10 h-10">
+                        <img src="{{ asset('images/Icons/Profile.svg') }}" alt="Profiel Icon" class="w-full h-full">
+                    </div>
+                    <span class="text-sm">Profiel</span>
+                </a>
+                <a href="{{ route('dashboard') }}" class="flex flex-col items-center justify-center gap-1"
+                   style="background-color: #AA0160; color: white; padding: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
+                    <div class="w-10 h-10">
+                        <img src="{{ asset('images/Icons/Home.svg') }}" alt="Home Icon" class="w-full h-full">
+                    </div>
+                    <span class="text-sm">Home</span>
+                </a>
+                <a href="{{ route('dashboard') }}" class="flex flex-col items-center justify-center gap-1"
+                   style="background-color: #AA0160; color: white; padding: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
+                    <div class="w-10 h-10">
+                        <img src="{{ asset('images/Icons/Inbox.svg') }}" alt="Inbox Icon" class="w-full h-full">
+                    </div>
+                    <span class="text-sm">Inbox</span>
+                </a>
+                <a href="{{ route('dashboard') }}" class="flex flex-col items-center justify-center gap-1"
+                   style="background-color: #AA0160; color: white; padding: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
+                    <div class="w-10 h-10">
+                        <img src="{{ asset('images/Icons/Collega.svg') }}" alt="Collega's Icon" class="w-full h-full">
+                    </div>
+                    <span class="text-sm">Collega's</span>
+                </a>
+                <a href="{{ route('dashboard') }}" class="flex flex-col items-center justify-center gap-1"
+                   style="background-color: #AA0160; color: white; padding: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
+                    <div class="w-10 h-10">
+                        <img src="{{ asset('images/Icons/Settings.svg') }}" alt="Instellingen Icon" class="w-full h-full">
+                    </div>
+                    <span class="text-sm">Instellingen</span>
+                </a>
 
                 {{-- WERKNEMER --}}
             @elseif(auth()->user()->role === 'werknemer')
-                <div class="flex flex-wrap justify-center gap-4">
-                    <a href="{{ route('vacancy.index') }}" class="w-full sm:w-48 lg:w-48" style="background-color: #AA0160; color: white; text-align: center; padding: 16px; font-size: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
-                        Vacatures
-                    </a>
-                    <a href="{{ route('dashboard') }}" class="w-full sm:w-48 lg:w-48" style="background-color: #AA0160; color: white; text-align: center; padding: 16px; font-size: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
-                        Inbox
-                    </a>
-                    <a href="{{ route('profile.edit') }}" class="w-full sm:w-48 lg:w-48" style="background-color: #AA0160; color: white; text-align: center; padding: 16px; font-size: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
-                        Profiel
-                    </a>
-                    <a href="{{ route('dashboard') }}" class="w-full sm:w-48 lg:w-48" style="background-color: #AA0160; color: white; text-align: center; padding: 16px; font-size: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
-                        Instellingen
-                    </a>
+                <a href="{{ route('vacancies.employee') }}" class="flex flex-col items-center justify-center gap-1"
+                   style="background-color: #AA0160; color: white; padding: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
+                    <div class="w-10 h-10">
+                        <img src="{{ asset('images/Icons/Vacancy.svg') }}" alt="Vacatures Icon" class="w-full h-full">
+                    </div>
+                    <span class="text-sm">Vacatures</span>
+                </a>
+                <a href="{{ route('dashboard') }}" class="flex flex-col items-center justify-center gap-1"
+                   style="background-color: #AA0160; color: white; padding: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
+                    <div class="w-10 h-10">
+                        <img src="{{ asset('images/Icons/Inbox.svg') }}" alt="Inbox Icon" class="w-full h-full">
+                    </div>
+                    <span class="text-sm">Inbox</span>
+                </a>
+                <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center gap-1"
+                   style="background-color: #AA0160; color: white; padding: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
+                    <div class="w-10 h-10">
+                        <img src="{{ asset('images/Icons/Profile.svg') }}" alt="Profiel Icon" class="w-full h-full">
+                    </div>
+                    <span class="text-sm">Profiel</span>
+                </a>
+                <a href="{{ route('dashboard') }}" class="flex flex-col items-center justify-center gap-1"
+                   style="background-color: #AA0160; color: white; padding: 16px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 1px #7C1A51;">
+                    <div class="w-10 h-10">
+                        <img src="{{ asset('images/Icons/Settings.svg') }}" alt="Instellingen Icon" class="w-full h-full">
+                    </div>
+                    <span class="text-sm">Instellingen</span>
+                </a>
 
-                </div>
             @elseif(auth()->user()->role === 'admin')
                     <x-slot name="header">
                         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -73,46 +108,7 @@
                             </div>
                         </div>
                     </div>
-
             @endif
         </div>
-
-
     </div>
-
-    <!-- Modal for Logout Confirmation -->
-    <div id="logoutModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50 hidden">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h3 class="text-xl font-semibold text-center mb-4">Weet u zeker dat u wilt uitloggen?</h3>
-            <div class="flex justify-between">
-                <button id="cancelButton" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400">
-                    Annuleer
-                </button>
-                <form method="POST" action="{{ route('logout') }}" id="logoutForm">
-                    @csrf
-                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
-                        Log Uit
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-
 </x-app-layout>
-
-<script>
-    // Get the modal and buttons
-    const logoutButton = document.getElementById('logoutButton');
-    const logoutModal = document.getElementById('logoutModal');
-    const cancelButton = document.getElementById('cancelButton');
-
-    // Show the modal when the logout button is clicked
-    logoutButton.addEventListener('click', function () {
-        logoutModal.classList.remove('hidden');
-    });
-
-    // Hide the modal when the cancel button is clicked
-    cancelButton.addEventListener('click', function () {
-        logoutModal.classList.add('hidden');
-    });
-</script>
