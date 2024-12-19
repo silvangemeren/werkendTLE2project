@@ -15,7 +15,12 @@
         <!-- Vacancies List -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             @foreach($employer_vacancies as $vacancy)
-                <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="relative bg-white rounded-lg shadow-lg p-6"> <!-- Added 'relative' for counter positioning -->
+                    <!-- Counter for Applications -->
+                    <div class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold rounded-full h-8 w-8 flex items-center justify-center shadow">
+                        {{ $vacancy->applications_count ?? 0 }}
+                    </div>
+
                     <!-- Vacancy Image -->
                     <div class="w-full h-48 bg-gray-200 mb-4 rounded-md">
                         <img src="{{ asset('/storage/' . $vacancy->imageUrl) }}" alt="Vacature Afbeelding" class="object-cover w-full h-full rounded-md">
@@ -55,5 +60,4 @@
             @endforeach
         </div>
     </div>
-
 </x-app-layout>

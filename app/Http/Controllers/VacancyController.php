@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Application;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VacancyController extends Controller
 {
@@ -71,16 +73,19 @@ public function guestSearch(Request $request){
      */
     public function indexForEmployer()
     {
-
-        if (auth()->check() && auth()->user()->role == 'werknemer') { // Explicitly check if user is logged in
+        if (auth()->check() && auth()->user()->role == 'werknemer') {
             return $this->indexForEmployee();
         }
-        if (auth()->check() && auth()->user()->role == 'admin') { // Explicitly check if user is logged in
+        if (auth()->check() && auth()->user()->role == 'admin') {
             return view('admin.admin-dashboard');
         }
 
-        $employer_vacancies = Vacancy::where('employer_id', auth()->id())->get();
+        // Fetch vacancies belonging to the authenticated employer
+        $employer_vacancies = Vacancy::where('employer_id', auth()->id())
+            ->withCount('applications') // Add the count of applications
+            ->get();
 
+        // Return the vacancies.employer view with the updated vacancies data
         return view('vacancies.employer', compact('employer_vacancies'));
     }
 
@@ -89,8 +94,7 @@ public function guestSearch(Request $request){
      * Display a listing of vacancies available for employees to apply for.
      */
     public function indexForEmployee()
-    {
-        if (auth()->check() && auth()->user()->role == 'werkgever') { // Explicitly check if user is logged in
+    {if (auth()->check() && auth()->user()->role == 'werkgever') { // Explicitly check if user is logged in
             return $this->indexForEmployer();
         }
         if (auth()->check() && auth()->user()->role == 'admin') { // Explicitly check if user is logged in
@@ -99,12 +103,17 @@ public function guestSearch(Request $request){
 
         $userId = auth()->id(); // Get the logged-in user's ID
 
+        // Fetch all available vacancies
+        $vacancies = Vacancy::where('status', 'available')->get();
         // Fetch available vacancies
         $employeeVacancies = Vacancy::where('status', '=', 'available')->get();
 
-        // Get the list of vacancy IDs the user has already applied for
-        $appliedVacancyIds = \DB::table('applications')
-            ->where('user_id', $userId)
+        // Add application counts manually
+        foreach ($vacancies as $vacancy) {
+            $vacancy->total_applications = Application::where('vacancy_id', $vacancy->id)->count();
+        }
+        // Fetch applied vacancy IDs for the logged-in user to check their applications
+        $appliedVacancyIds = Application::where('user_id', $userId)
             ->pluck('vacancy_id')
             ->toArray();
 
@@ -114,6 +123,11 @@ public function guestSearch(Request $request){
     public function indexForGuest(){
         return view('vacancies.guest');
     }
+
+
+
+
+
 
 
     /**
@@ -168,7 +182,46 @@ public function guestSearch(Request $request){
     }
 
     /**
-     * Show the form for editing the specified vacancy.
+     * Apply for a specific vacancy.
+     */
+
+    /**
+     * Show a single vacancy.
+     */
+    /**
+     * Show a single vacancy with applicant's queue position.
+     */
+    public function show($id)
+    {
+        $vacancy = Vacancy::withCount('applications')->findOrFail($id);
+
+        // Retrieve the authenticated user's ID
+        $userId = Auth::id();
+
+        // Check if the user has already applied for the vacancy
+        $has_applied = Application::where('user_id', $userId)
+            ->where('vacancy_id', $id)
+            ->exists();
+
+        // Fetch user's application and count the applicants ahead (optional)
+        $queuePosition = null;
+        if ($has_applied) {
+            $userApplication = Application::where('user_id', $userId)
+                ->where('vacancy_id', $id)
+                ->first();
+            $queuePosition = Application::where('vacancy_id', $id)
+                ->where('applied_at', '<', $userApplication->applied_at)
+                ->count();
+        }
+
+        return view('vacancy.show', compact('vacancy', 'queuePosition', 'has_applied'));
+    }
+
+
+
+
+    /**
+     * Edit a vacancy.
      */
     public function edit($id)
     {
@@ -279,11 +332,6 @@ public function guestSearch(Request $request){
         return redirect()->route('vacancies.employer')->with('success', 'Vacature succesvol verwijderd.');
     }
 
-    public function show($id)
-    {
-        $vacancy = Vacancy::findOrFail($id);
-        return view('vacancy.show', compact('vacancy'));
-    }
 }
 
 

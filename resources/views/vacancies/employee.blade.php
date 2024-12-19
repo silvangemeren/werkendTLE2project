@@ -7,22 +7,26 @@
             <h1 class="text-3xl font-semibold text-[#2E342A]">Beschikbare Vacatures</h1>
         </div>
 
-        <!-- Search Bar -->
-        <div class="flex items-center justify-between mb-6">
-            <form action="{{ route('vacancy.search') }}" method="GET" class="w-full sm:w-1/3 flex items-center">
-                <input type="text" name="vacancy" placeholder="Zoek vacatures" class="w-full p-4 border border-gray-300 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-[#AA0160]">
-                <x-primary-button type="submit" class="bg-[#AA0160] hover:bg-[#8C004E] text-white px-6 py-3 rounded-md shadow-md ml-4">
-                    Zoeken
-                </x-primary-button>
+        <div class="flex items-center justify-between mb-4">
+            <form action="{{ route('vacancy.search') }}" method="GET">
+                <input type="text" name="vacancy" placeholder="Zoek" class="p-2 border rounded">
+                <x-primary-button type="submit">Zoeken</x-primary-button>
             </form>
         </div>
 
         <!-- Vacancies List -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            @forelse($searchedVacancies ?? $employeeVacancies as $vacancy)
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            @forelse($searchedVacancies ?? $vacancies as $vacancy)
                 <div class="block">
                     <!-- Vacancy Card -->
-                    <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="bg-white rounded-lg shadow-md p-6 relative">
+                        <!-- Total Applicants Badge -->
+                        <div class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center shadow">
+                            {{ $vacancy->total_applications }}
+                        </div>
+
+
+
                         <!-- Vacancy Image -->
                         <div class="w-full h-64 bg-gray-200 mb-4">
                             <img src="{{ $vacancy->imageUrl ? asset('/storage/' . $vacancy->imageUrl) : 'https://via.placeholder.com/150' }}" alt="Vacature Afbeelding" class="object-cover w-full h-full rounded-lg">
@@ -71,5 +75,6 @@
                 <p class="text-[#2E342A]">Geen beschikbare vacatures om op te solliciteren.</p>
             @endforelse
         </div>
+    </div>
     </div>
 </x-app-layout>

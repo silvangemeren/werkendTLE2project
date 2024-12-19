@@ -26,7 +26,17 @@
             <!-- Vacature Titel -->
             <h1 class="text-3xl font-semibold text-gray-800 mb-4">{{ $vacancy->title }}</h1>
 
-            <!-- Vacature Omschrijving -->
+            @if(isset($queuePosition))
+                <div class="mt-4 text-sm text-gray-700">
+                    Je hebt {{ $queuePosition }} sollicitanten voor je in de wachtrij.
+                </div>
+            @else
+                <div class="mt-4 text-sm text-gray-500">
+                    Je hebt nog niet gesolliciteerd voor deze vacature.
+                </div>
+            @endif
+
+            <!-- Description -->
             <p class="text-gray-600 mb-4 break-words">{!! nl2br(e($vacancy->description)) !!}</p>
 
             <!-- Vacature Gegevens -->
@@ -38,15 +48,27 @@
                 <p><strong>Status:</strong> {{ $vacancy->status }}</p>
             </div>
 
-            <!-- Solliciteren Knop -->
-            <form action="{{ route('vacancy.apply', ['vacancy' => $vacancy->id]) }}" method="POST" class="mt-6">
-                @csrf
-                <button type="submit" class="bg-green-500 hover:bg-green-600 text-white text-sm px-6 py-3 rounded-lg shadow-md">
-                    Solliciteren
-                </button>
-            </form>
+            <!-- Apply Button with Success Message -->
+            <div class="mt-6">
+                @if($has_applied)
+                    <!-- Greyed-Out Button -->
+                    <button class="bg-gray-500 text-white text-sm px-4 py-2 rounded-lg shadow cursor-not-allowed" disabled>
+                        Je hebt al gesolliciteerd
+                    </button>
+                @else
+                    <!-- Active Button -->
+                    <form action="{{ route('vacancy.apply', ['vacancy' => $vacancy->id]) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white text-sm px-6 py-3 rounded-lg shadow-md">
+                            Solliciteren
+                        </button>
+                    </form>
+                @endif
+            </div>
+
+            <!-- Success Message -->
             @if (session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4">
                     <strong>Succes:</strong> {{ session('success') }}
                 </div>
             @endif
