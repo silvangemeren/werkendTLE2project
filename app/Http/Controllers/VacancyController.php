@@ -122,14 +122,6 @@ public function guestSearch(Request $request){
     }
 
 
-    public function indexForEmployer()
-    {
-        $employer_vacancies = Vacancy::where('employer_id', Auth::id())
-            ->withCount('applications') // Adds applications_count to each vacancy
-            ->get();
-
-        return view('vacancies.employer', compact('employer_vacancies'));
-    }
 
 
 
@@ -189,26 +181,6 @@ public function guestSearch(Request $request){
     /**
      * Apply for a specific vacancy.
      */
-    public function apply($id)
-    {
-        $vacancy = Vacancy::findOrFail($id);
-        $userId = Auth::id();
-
-        // Check for existing application
-        if (Application::where('user_id', $userId)->where('vacancy_id', $vacancy->id)->exists()) {
-            return redirect()->route('vacancies.employee')->with('error', 'Je hebt al gesolliciteerd op deze vacature.');
-        }
-
-        // Create application
-        Application::create([
-            'user_id' => $userId,
-            'vacancy_id' => $vacancy->id,
-            'status' => 'submitted',
-            'applied_at' => now(),
-        ]);
-
-        return redirect()->route('vacancies.employee')->with('success', 'Je hebt succesvol gesolliciteerd!');
-    }
 
     /**
      * Show a single vacancy.
@@ -354,11 +326,6 @@ public function guestSearch(Request $request){
         return redirect()->route('vacancies.employer')->with('success', 'Vacature succesvol verwijderd.');
     }
 
-    public function show($id)
-    {
-        $vacancy = Vacancy::findOrFail($id);
-        return view('vacancy.show', compact('vacancy'));
-    }
 }
 
 
