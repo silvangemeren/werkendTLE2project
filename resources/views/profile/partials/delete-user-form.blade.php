@@ -1,4 +1,4 @@
-<section class="space-y-6">
+<section class="space-y-6 bg-[#92AA83] p-6 rounded-md shadow-md">
     <header>
         <h2 class="text-lg font-extrabold text-[#2E342A]">
             {{ __('Verwijder Account') }}
