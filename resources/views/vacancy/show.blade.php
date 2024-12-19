@@ -37,8 +37,6 @@
             @endif
 
             <!-- Description -->
-            <p class="text-gray-600 mb-4">{{ $vacancy->description }}</p>
-            <!-- Vacature Omschrijving -->
             <p class="text-gray-600 mb-4 break-words">{!! nl2br(e($vacancy->description)) !!}</p>
 
             <!-- Vacature Gegevens -->
@@ -50,7 +48,7 @@
                 <p><strong>Status:</strong> {{ $vacancy->status }}</p>
             </div>
 
-            <!-- Apply Button -->
+            <!-- Apply Button with Success Message -->
             <div class="mt-6">
                 @if($has_applied)
                     <!-- Greyed-Out Button -->
@@ -61,21 +59,16 @@
                     <!-- Active Button -->
                     <form action="{{ route('vacancy.apply', ['vacancy' => $vacancy->id]) }}" method="POST">
                         @csrf
-                        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-2 rounded-lg shadow">
+                        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white text-sm px-6 py-3 rounded-lg shadow-md">
                             Solliciteren
                         </button>
                     </form>
                 @endif
             </div>
-            <!-- Solliciteren Knop -->
-            <form action="{{ route('vacancy.apply', ['vacancy' => $vacancy->id]) }}" method="POST" class="mt-6">
-                @csrf
-                <button type="submit" class="bg-green-500 hover:bg-green-600 text-white text-sm px-6 py-3 rounded-lg shadow-md">
-                    Solliciteren
-                </button>
-            </form>
+
+            <!-- Success Message -->
             @if (session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4">
                     <strong>Succes:</strong> {{ session('success') }}
                 </div>
             @endif

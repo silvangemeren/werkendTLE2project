@@ -1,33 +1,26 @@
 <x-app-layout>
     @vite('resources/css/app.css')
 
-    <div class="max-w-screen-2xl mx-auto p-4">
+    <div class="max-w-7xl mx-auto p-6">
         <!-- Header Section -->
-        <div class="flex items-center justify-between mb-4">
-            <h1 class="text-2xl font-bold text-gray-800">Vacatures Beheren</h1>
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-3xl font-semibold text-[#2E342A]">Vacatures Beheren</h1>
             <form action="{{ route('vacancy.create') }}" method="GET">
-                <x-primary-button class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg">
+                <x-primary-button class="bg-[#AA0160] hover:bg-[#8C004E] text-white px-6 py-3 rounded-md shadow-md">
                     Nieuwe Vacature
                 </x-primary-button>
             </form>
         </div>
 
         <!-- Vacancies List -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             @foreach($employer_vacancies as $vacancy)
-                <div class="block relative"> <!-- Added 'relative' for badge positioning -->
-                    <!-- Vacancy Card -->
-                    <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="relative bg-white rounded-lg shadow-lg p-6"> <!-- Added 'relative' for counter positioning -->
+                    <!-- Counter for Applications -->
+                    <div class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold rounded-full h-8 w-8 flex items-center justify-center shadow">
+                        {{ $vacancy->applications_count ?? 0 }}
+                    </div>
 
-                        <!-- Applications Count Badge -->
-                        <div class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center shadow">
-                            {{ $vacancy->applications_count ?? 0 }}
-                        </div>
-
-                        <!-- Vacancy Image -->
-                        <div class="w-full h-64 bg-gray-200 mb-4">
-                            <img src="{{ asset('/storage/' . $vacancy->imageUrl) }}" alt="Vacature Afbeelding" class="object-cover w-full h-full rounded-lg">
-                <div class="bg-white rounded-lg shadow-lg p-6">
                     <!-- Vacancy Image -->
                     <div class="w-full h-48 bg-gray-200 mb-4 rounded-md">
                         <img src="{{ asset('/storage/' . $vacancy->imageUrl) }}" alt="Vacature Afbeelding" class="object-cover w-full h-full rounded-md">
@@ -67,5 +60,4 @@
             @endforeach
         </div>
     </div>
-
 </x-app-layout>
