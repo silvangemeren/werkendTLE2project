@@ -20,4 +20,16 @@ class Application extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    protected static function booted()
+    {
+        static::created(function ($application) {
+            $application->vacancy->increment('total_applications');
+        });
+
+        static::deleted(function ($application) {
+            $application->vacancy->decrement('total_applications');
+        });
+    }
+
 }

@@ -73,8 +73,6 @@
                                 </form>
                             @endif
                         </div>
-                        {{-- Debug Applicants Count --}}
-                        <p>Total Applicants: {{ $vacancy->total_applications }}</p>
 
                     </div>
                 </div>

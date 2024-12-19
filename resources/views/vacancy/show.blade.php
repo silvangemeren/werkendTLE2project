@@ -24,7 +24,6 @@
                 </div>
             @endif
 
-
             <!-- Description -->
             <p class="text-gray-600 mb-4">{{ $vacancy->description }}</p>
 
@@ -38,12 +37,22 @@
             </div>
 
             <!-- Apply Button -->
-            <form action="{{ route('vacancy.apply', ['vacancy' => $vacancy->id]) }}" method="POST" class="mt-6">
-                @csrf
-                <button type="submit" class="bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-2 rounded-lg shadow">
-                    Solliciteren
-                </button>
-            </form>
+            <div class="mt-6">
+                @if($has_applied)
+                    <!-- Greyed-Out Button -->
+                    <button class="bg-gray-500 text-white text-sm px-4 py-2 rounded-lg shadow cursor-not-allowed" disabled>
+                        Je hebt al gesolliciteerd
+                    </button>
+                @else
+                    <!-- Active Button -->
+                    <form action="{{ route('vacancy.apply', ['vacancy' => $vacancy->id]) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-2 rounded-lg shadow">
+                            Solliciteren
+                        </button>
+                    </form>
+                @endif
+            </div>
         </div>
     </div>
 </x-app-layout>

@@ -165,21 +165,25 @@ class VacancyController extends Controller
         $vacancy = Vacancy::withCount('applications')->findOrFail($id);
         $userId = Auth::id();
 
-        // Fetch user's application and count the applicants ahead
-        $userApplication = Application::where('user_id', $userId)
+        // Check if the user has already applied for the vacancy
+        $has_applied = Application::where('user_id', $userId)
             ->where('vacancy_id', $id)
-            ->first();
+            ->exists();
 
+        // Fetch user's application and count the applicants ahead (optional)
         $queuePosition = null;
-
-        if ($userApplication) {
+        if ($has_applied) {
+            $userApplication = Application::where('user_id', $userId)
+                ->where('vacancy_id', $id)
+                ->first();
             $queuePosition = Application::where('vacancy_id', $id)
                 ->where('applied_at', '<', $userApplication->applied_at)
                 ->count();
         }
 
-        return view('vacancy.show', compact('vacancy', 'queuePosition'));
+        return view('vacancy.show', compact('vacancy', 'queuePosition', 'has_applied'));
     }
+
 
 
     /**
