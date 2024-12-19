@@ -51,7 +51,7 @@
                 <img src="{{ asset('images/logo-oh.png') }}" alt="Open Hiring Logo" class="max-h-16 h-auto">
             </div>
 
-            <x-nav-link :href="route('home')" :active="request()->routeIs('home')"
+            <x-nav-link :href="route('inbox')" :active="request()->routeIs('inbox')"
                         class="text-[#FAEC02] text-lg font-extrabold">
                 {{ __('Inbox') }}
             </x-nav-link>
